@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title center-align deep-orange-text text-darken-2">AI নিয়ে কিছু কথা</span>
+                <p class="center-left">
+                    Artificial Intelligence বা কৃত্তিম বুদ্ধিমত্তা সম্পর্কে জানার আগে আমাদের এটা জানার দরকার যে, intelligence আসলে কি? 
+                    intelligence বলতে বোঝায় নতুন কোনকিছু শেখার এবং যা শিখলাম সেটা ব্যবহার করে বাস্তবজীবনে কোন সমস্যার সমাধান করা। 
+                    সোজা কথায় চিন্তাশক্তি। Artificial Intelligence হচ্ছে কম্পিউটার বিজ্ঞানের এমন একটি শাখা যেখানে কম্পিউটারকে মানুষের মত চিন্তা করতে শেখানো হয়।
+                    একটি সহজ উদাহরণ দেই।<br><br> ধরুন, আপনি একটি program লিখবেন যেটা একটা সংখ্যা ইনপুট নিবে তারপর আউটপুট হিসেবে বলে দিবে সংখ্যাটি জোড় না বিজোড়।
+                    গতানুগতিক প্রোগ্রামিং অনুযায়ী, আপনি একটি কোড যেন ইনপুট হিসেবে নেওয়া সংখ্যাটিকে ২ দিয়ে ভাগ করে ভাগফল যদি ১ হয় তাহলে সংখ্যাটি বিজোড় আর তা নাহলে সংখ্যাটি জোড়। 
+                    অথবা হয়ত আপনি সংখ্যাটিকে ১ এর সাথে বাইনারী AND করবেন। যদি দেখেন আউটপুট ১ তাহলে বিজোড় নাহলে জোড়।
+                    এখানে লক্ষ্য করে দেখুন যে, একটি সংখ্যা জোড় না বিজোড় সেটা কিভাবে চিনবে সেটা আপনি কম্পিউটারকে বলে দিচ্ছেন। 
+                    কম্পিউটার নিজে এটা বের করে নেয়নি। Artificial Intelligence এর কাজ মুলত এটাই। 
+                    আপনি যদি কম্পিউটারকে কিছু জোড় সংখ্যা দেখিয়ে বলে দেন এগুলো জোড় আর কিছু বিজোড় সংখ্যা দেখিয়ে বলে দেন এগুলো বিজোড়, তাহলে কম্পিউটার নিজেই জোড়-বিজোড় চেনার উপায় বের করে নিবে।<br><br>
+                    Intelligence যা যা নিয়ে তৈরি তা নিম্নরূপঃ<br>
+                    <div class="deep-orange-text text-darken-2">• Reasoning</div>  
+                    <div class="deep-orange-text text-darken-2">• Learning</div>
+                    <div class="deep-orange-text text-darken-2">• Problem Solving</div>
+                    <div class="deep-orange-text text-darken-2">• Perception</div>
+                    <div class="deep-orange-text text-darken-2">• Linguistic</div><br>
+                    
+                    <span class="deep-orange-text text-darken-2">• Reasoning</span> : আশেপাশের পরিবেশ পর্যবেক্ষণ প্রয়োজনীয় তথ্য বের করা, প্রয়োজনীয় তথ্য ও যুক্তি একটার পর একটা সাজিয়ে কোন সিদ্ধান্তে পৌছানো বা কোনকিছুর সম্ভাবনা বের করাকে Resoning বলে।<br>
+                    এটি মুলত দুই প্রকারঃ<br>
+                    • Deductive Resoning<br>
+                    • Inductive Resoning<br>
+                    Deductive Resoning: পূর্ব অভিজ্ঞতা ও আশেপাশের পরিবেশ থেকে তথ্য নিয়ে নির্দিষ্ট কোন সিদ্ধান্তে পৌছানোকে Deductive Resoning বলে। যেমন,<br>
+                    <span style="margin-left: 50px;">Experience: রাজশাহীতে ভালো আম হয়।</span><br>
+                    <span style="margin-left: 50px;">Fact: এই আমটি রাজশাহীর।</span><br>
+                    <span style="margin-left: 50px;">Conclusion: এই আমটি ভালো।</span><br>
+                    Inductive Resoning: Deductive Reasoning এর ঠিক উল্টা হল Inductive Resoning. এখানে পরিবেশ থেকে পাওয়া তথ্য থেকে তত্ত্ব দাঁড় করিয়ে দেওয়া হয়। যেমন,<br>
+                    <span style="margin-left: 50px;">Fact1: গতপরশু ভোরবেলা মোরগ ডেকেছিল।</span><br>
+                    <span style="margin-left: 50px;">Fact2: গতকাল ভোরবেলা মোরগ ডেকেছিল।</span><br>
+                    <span style="margin-left: 50px;">Fact3: আজ ভোরেও মোরগ ডেকে উঠল।</span><br>
+                    <span style="margin-left: 50px;"></span>Conclusion: ভোরে মোরগ ডাকে।</span><br>
+                    আরও এক ধরনের Resoning আছে যেটা Induction বা Deduction কোনটির ভেতরই যায় না। একে Abduction Resoning বলে। যেমনঃ<br>
+                    <span style="margin-left: 50px;"></span>Fact1: আমি ঘরে ঢুকে দেখি মেঝেতে কাগজপত্র ছড়ায়ে ছিটিয়ে পড়ে আছে।</span><br>
+                    <span style="margin-left: 50px;"></span>Fact2: ঘরে আমার পোষা কুকুর ছাড়া আর কেও ছিল না।</span><br>
+                    <span style="margin-left: 50px;">Conclusion: হয়ত আমার পোষা কুকুর কাগজগুলোর এই অবস্থা করেছে।</span><br>
+                    এখানে কোন নির্দিষ্ট Conclusion এ আসে না। কতগুলো ঘটনা থেকে তথ্য নিয়ে নির্দিষ্ট একটা ঘটনা ঘটতে পারে বলে আন্দাজ করা হয়।<br><br>
+                    <span class="deep-orange-text text-darken-2">Learning</span>: কোনকিছু শেখার process গুলো এর অন্তর্ভুক্ত। পরবর্তী পর্ব “মেশিন লার্নিং-এ হাতেখড়ি”-তে এটা নিয়ে বিস্তারিত আলোচনা হবে।<br><br>
+                    <span class="deep-orange-text text-darken-2">Problem Solving</span>: যখন কেও কোন সমস্যায় পড়ে, সেটার feasible solution থাকতে পারে বা সবচেয়ে ভালো সমাধান(optimal solution) বের করার পদ্ধতিগুলো এর অন্তর্ভুক্ত।<br>
+                    <span class="deep-orange-text text-darken-2">Perception</span>: ইন্দ্রিয় শক্তি(robot এর sensor) দিয়ে কোনকিছুকে উপলদ্ধি করা এর অন্তর্ভুক্ত।<br><br>
+                    <span class="deep-orange-text text-darken-2">Linguistic Intelligence</span>: কোন মানুষের কথা শুনে বা পড়ে সেটার মানে বোঝা, সেটা থেকে প্রয়োজনীয় তথ্য বের করে নিয়ে আসা বা শুদ্ধ ব্যাকারণসঙ্গত উপায়ে তাকে উত্তর দেওয়া ইত্যাদি জিনিসগুলোকে Linguistic Intelligence বলে। 
+                    যদি এটা নিয়ে বিস্তারিত জানতে চান তাহলে Natural Language Processing(NLP) নিয়ে পড়াশোনা করতে পারেন।<br><br>
+                    
+                    মেশিন লার্নিং হল AI এর একটি অংশ। পরবর্তী পর্বগুলোতে আমরা মেশিন লার্নিং নিয়ে বিস্তারিত আলোচনা করব। আজকের মত এইটুকুই।
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+                
+{% endblock %}
