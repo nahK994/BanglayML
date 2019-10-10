@@ -23,3 +23,6 @@ class RL_IntroText(TemplateView):
 
 class RL_Q_learningText(TemplateView):
     template_name = "RL_Q_learningText.html"
+
+class k_means_clusteringText(TemplateView):
+    template_name = "k_means_clusteringText.html"

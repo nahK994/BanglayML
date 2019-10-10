@@ -1,0 +1,240 @@
+{% extends 'base.html' %}
+
+{% block body %}
+{% load static %}
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title center-align deep-orange-text text-darken-2">K-means clustering</span>
+                <p class="center-left">
+                    Unsupervised Learning অনেকগুলো unlabeled data- এর ভেতর থেকে সামঞ্জস্য বা প্যাটার্ন খুঁজে বের করে এবং প্যাটার্ন অনুযায়ী ডাটাকে কতগুলো ক্লাস্টারে ভাগ করে দেয়। যত রকমের ক্লাস্টারিং আছে তাদের ভেতর অন্যতম জনপ্রিয় হল <span class="deep-orange-text text-darken-2">k-means clustering</span>।<br><br>
+                    k-means clustering দুই ধাপে করা হয়।<br>
+                    <span class="deep-orange-text text-darken-2">• Centroid update</span><br>
+                    <span class="deep-orange-text text-darken-2">• Cluster assignment</span><br><br>
+                    মনে করুন, N- সংখ্যক ডাটাকে K-সংখ্যক ক্লাস্টারে ভাগ করা হবে। প্রতিটি ক্লাস্টারে এক করে centroid থাকবে। সুতরাং মোট K-টি centroid. Centroid গুলোকে C দিয়ে প্রকাশ করি। ধরি, প্রথম ক্লাস্টারের centroid C_1, দ্বিতীয় ক্লাস্টারের centroid C_2, … …… … … .. , k-তম ক্লাস্টারের centroid C_k<br><br>
+                    আমরা প্রথমে ডাটাসেট থেকে random K-সংখ্যক পয়েন্টকে centroid ধরে নিব। তারপর ডাটাসেটের প্রতিটি মানের থেকে প্রতিটি centroid এর দূরত্ব বের করব। কোন ডাটা পয়েন্ট যে centroid এর সবচেয়ে কাছে ধরে নিব ঐ ডাটা ঐ centroid-এর ক্লাস্টারের অন্তর্ভুক্ত। এভাবে আমরা ডাটা পয়েন্টগুলোর cluster assign করব। 
+                    এরপর প্রতিটা ক্লাস্টারের অন্তর্ভুক্ত ডাটা পয়েন্টগুলো দিয়ে ঐ ক্লাস্টারগুলোর centroid বের করব। 
+                    এবারে এই নতুন centroid গুলো দিয়ে আবার ডাটা পয়েন্টগুলোর cluster assign করব। যখন cluster assignment-এর পর যদি দেখা যাবে যে, প্রতিটা ডাটা পয়েন্টই আগের ক্লাস্টারেই আছে, নতুন কোন ক্লাস্টারে অন্তর্ভুক্ত হয়নি। 
+                    তখন iteration থামিয়ে দেওয়া হবে।<br><br>
+                    ধোঁয়াশা লাগছে? চিন্তার কিছু নিই। হাতে কলমে পুরো জিনিসটা একবার করে দেখালে সবকিছু ক্লিয়ার হয়ে যাবে।<brg>
+                    মনে করুন, কয়েকটি পয়েন্ট দেয়া আছে। পয়েন্টগুলো হচ্ছে, (1, 1) (2, 2), (3, 2), (9,8) ও (10, 11)। পয়েন্টগুলো হচ্ছে এক একটি ঘর। আপনি দুইটা হোটেল বসাতে চান। কোন দুইটা জায়গায় বসালে আপনার সবচেয়ে বেশী লাভ হবে? 
+                    এটা সমাধান করার জন্য আমরা ডাটাসেটকে দুইটি ক্লাস্টারে ভাগ করব এবং ঐ ক্লাস্টার দুইটির centroid বের করব। ঐ centroid-দুটিই আমাদের হোটেল বসানোর জন্য কাঙ্খিত জায়গা। আমরা এই সমস্যাটা হাতে কলমে সমাধান করে k-means clustering শিখব।<br>
+                    Initially, প্রথম ক্লাস্টারের centroid (0, 0) আর দ্বিতীয় ক্লাস্টারের centroid (-1, -1)- কে হিসেবে ধরে নিলাম।<br><br>
+<h6 class="deep-orange-text text-darken-2">Iteration no. 1 ------------------------------------------------------------------------------------------------------------------------------------------------------------------</h6>
+<div class="row">
+    <div class="col s4 m6">  
+    <table class="striped highlight centered" style="margin-left: 310px;">
+        <thead>
+          <tr>
+            <th>ডাটা পয়েন্ট</th>
+            <th>(0, 0) থেকে দূরত্ব</th>
+            <th>(-1, -1) থেকে দূরত্ব</th>
+            <th>ক্লাস্টার নং</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>(1, 1)</td>
+            <td>1.414</td>
+            <td>2.828</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>(2, 2)</td>
+            <td>2.828</td>
+            <td>4.243</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>(3, 2)</td>
+            <td>3.606</td>
+            <td>5</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>(9, 8)</td>
+            <td>12.042</td>
+            <td>13.454</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>(10, 11)</td>
+            <td>14.866</td>
+            <td>16.28</td>
+            <td>1</td>
+          </tr>
+        </tbody>
+    </table>
+    </div>
+</div>
+            আমরা এখানে দেখতে পারছি যে, সবগুলো ডাটা পয়েন্টই ক্লাস্টার ১ এর ভেতর গিয়েছে।
+            তাই ১নং ক্লাস্টারের আপডেটেড centroid ((1+2+3+9+10)/5, (1+2+2+8+11)/5) = (5, 4.8). <br><br>
+
+            <h6 class="deep-orange-text text-darken-2">Iteration no. 2 ------------------------------------------------------------------------------------------------------------------------------------------------------------------</h6>
+            <div class="row">
+                <div class="col s4 m6">  
+                <table class="striped highlight centered" style="margin-left: 310px;">
+                    <thead>
+                      <tr>
+                        <th>ডাটা পয়েন্ট</th>
+                        <th>(5, 4.8) থেকে দূরত্ব</th>
+                        <th>(-1, -1) থেকে দূরত্ব</th>
+                        <th>ক্লাস্টার নং</th>
+                      </tr>
+                    </thead>
+            
+                    <tbody>
+                      <tr>
+                        <td>(1, 1)</td>
+                        <td>5.517</td>
+                        <td>2.828</td>
+                        <td>2</td>
+                      </tr>
+                      <tr>
+                        <td>(2, 2)</td>
+                        <td>4.104</td>
+                        <td>4.243</td>
+                        <td>1</td>
+                      </tr>
+                      <tr>
+                        <td>(3, 2)</td>
+                        <td>3.441</td>
+                        <td>5</td>
+                        <td>1</td>
+                      </tr>
+                      <tr>
+                        <td>(9, 8)</td>
+                        <td>5.122</td>
+                        <td>13.454</td>
+                        <td>1</td>
+                      </tr>
+                      <tr>
+                        <td>(10, 11)</td>
+                        <td>7.965</td>
+                        <td>16.28</td>
+                        <td>1</td>
+                      </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+            এখানে দেখা যাচ্ছে যে, (1, 1) ব্যতীত বাকি সব ডাটা পয়েন্ট ১নং ক্লাস্টারের অন্তর্ভুক্ত। 
+            তাই ক্লাস্টার ১ এর নতুন centroid- ((2+3+9+10)/4, (2+2+8+11)/4) = (6, 5.75) এবং ক্লাস্টার ২ এর নতুন centroid (1, 1)। <br><br>
+            <h6 class="deep-orange-text text-darken-2">Iteration no. 3 ------------------------------------------------------------------------------------------------------------------------------------------------------------------</h6>
+            <div class="row">
+                <div class="col s4 m6">  
+                <table class="striped highlight centered" style="margin-left: 310px;">
+                    <thead>
+                      <tr>
+                        <th>ডাটা পয়েন্ট</th>
+                        <th>(6, 5.75) থেকে দূরত্ব</th>
+                        <th>(1, 1) থেকে দূরত্ব</th>
+                        <th>ক্লাস্টার নং</th>
+                      </tr>
+                    </thead>
+            
+                    <tbody>
+                      <tr>
+                        <td>(1, 1)</td>
+                        <td>6.897</td>
+                        <td>0</td>
+                        <td>2</td>
+                      </tr>
+                      <tr>
+                        <td>(2, 2)</td>
+                        <td>5.483</td>
+                        <td>1.414</td>
+                        <td>2</td>
+                      </tr>
+                      <tr>
+                        <td>(3, 2)</td>
+                        <td>4.802</td>
+                        <td>2.236</td>
+                        <td>2</td>
+                      </tr>
+                      <tr>
+                        <td>(9, 8)</td>
+                        <td>3.75</td>
+                        <td>10.63</td>
+                        <td>1</td>
+                      </tr>
+                      <tr>
+                        <td>(10, 11)</td>
+                        <td>6.6</td>
+                        <td>13.454</td>
+                        <td>1</td>
+                      </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+            এখন, (1, 1), (2, 2) ও (3, 2) ডাটা পয়েন্টগুলো ক্লাস্টার ২ এর অন্তর্ভুক্ত এবং (9, 8) ও (10, 11). 
+            ক্লাস্টার ১- এর আপডেটেড centroid- ((9+10)/2, (8+11)/2) = (9.5, 9.5) এবং ক্লাস্টার ২-এর আপডেটেড centroid- ((1+2+3)/3,(1+2+2)/3) =(2, 1.67). <br><br>
+            <h6 class="deep-orange-text text-darken-2">Iteration no. 4 ------------------------------------------------------------------------------------------------------------------------------------------------------------------</h6>
+            <div class="row">
+                <div class="col s4 m6">  
+                <table class="striped highlight centered" style="margin-left: 310px;">
+                    <thead>
+                      <tr>
+                        <th>ডাটা পয়েন্ট</th>
+                        <th>(9.5, 9.5) থেকে দূরত্ব</th>
+                        <th>(2, 1.67) থেকে দূরত্ব</th>
+                        <th>ক্লাস্টার নং</th>
+                      </tr>
+                    </thead>
+            
+                    <tbody>
+                      <tr>
+                        <td>(1, 1)</td>
+                        <td>12.02</td>
+                        <td>1.204</td>
+                        <td>2</td>
+                      </tr>
+                      <tr>
+                        <td>(2, 2)</td>
+                        <td>10.607</td>
+                        <td>0.33</td>
+                        <td>2</td>
+                      </tr>
+                      <tr>
+                        <td>(3, 2)</td>
+                        <td>9.925</td>
+                        <td>1.05</td>
+                        <td>2</td>
+                      </tr>
+                      <tr>
+                        <td>(9, 8)</td>
+                        <td>1.58</td>
+                        <td>9.438</td>
+                        <td>1</td>
+                      </tr>
+                      <tr>
+                        <td>(10, 11)</td>
+                        <td>1.58</td>
+                        <td>12.29</td>
+                        <td>1</td>
+                      </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+            যেহেতু ডাটা পয়েন্টের ক্লাস্টার এখনও আগের মতই আছে। তাই আমরা এখন নিশ্চিতভাবে বলতে পারি যে, (9, 8), (10, 11) প্রথম ক্লাস্টারের অন্তর্ভুক্ত এবং এর centroid (2, 1.67)।
+            (1, 1), (2, 2), (3, 2) দ্বিতীয় ক্লাস্টারের অন্তর্ভুক্ত এবং এর centroid (9.5, 9.5)। <br><br> 
+            <span class="deep-orange-text text-darken-2">Objective function</span>,<br><img style="margin-left: 200px;" src="{% static "kmeansclusteringobjfunc.jpg" %}"><br>
+            <span class="deep-orange-text text-darken-2">Optimal objective function</span>, <br><img style="margin-left: 200px;" src="{% static "optimalclusteringobjfunc.jpg" %}"><br><br>
+            এখন ধরুন আপনাকে ইচ্ছামত হোটেল বসানোর সুযোগ দেওয়া হল। তাহলে কতগুলো হোটেল বসানো optimal হবে? 
+            এটা বের করা হয় elbow method এর দ্বারা।<br><br>
+            <span class="deep-orange-text text-darken-2">Elbow method</span> অনেকটা এরকম যে, ডাটা পয়েন্টগুলোকে ১টি ক্লাস্টারে ভাগ করে কস্ট বের করব। 
+            তারপর ক্লাস্টার vs কস্ট একটি গ্রাফে বসাব। এভাবে আরও ক্লাস্টারে ভাগ করে কস্ট গ্রাফে বসাব। 
+            এভাবে গ্রাফে বসাতে থাকলে একটা সময় দেখা যাবে যে, কস্ট ফাংশনের মান অনেক ধীরে ধীরে কমছে।
+            যে পয়েন্ট থেকে কস্ট ফাংশনের মান ধীরে ধীরে কমতে শুরু করবে সেটাই elbow point. 
+            আর elbow point- এর ক্লাস্টার সংখ্যাই হল optimal number of cluster.<br><br>
+            সুতরাং, elbow point যতগুলো ক্লাস্টার নির্দেশ করবে ততগুলো হোটেল বসাতে হবে।
+        </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

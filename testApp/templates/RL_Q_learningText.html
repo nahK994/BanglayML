@@ -13,20 +13,20 @@
                     Q-learning সম্পর্কে জানার আগে আমরা কিছু কিছু ছোট ছোট বিষয় সম্পর্কে জেনে নিব।<br>
                     <span class="deep-orange-text text-darken-2">Policy:</span> Policy মুলত কোন একটা নির্দিষ্ট স্টেটে থাকা অবস্থায় অই স্টেট থেকে সম্ভাব্য সকল প্রকার action-এর probability-কে ম্যাপ করে। 
                     একে π দিয়ে প্রকাশ করা হয়।<br>
-                    <img style="margin-left: 380px;" src="{% static "policy.jpg" %}"><br>
+                    <img style="margin-left: 380px;" src="{% static "policy.jpg" %}"><br><br>
                     <span class="deep-orange-text text-darken-2">State-value function:</span> কোন স্টেট agent-এর কতটা ভালো বা খারাপ এটা বের করা হয় স্টেট ভ্যালু ফাংশন দিয়ে। 
                     Policy, State-value function- এর উপর নির্ভর করে।
                     তাই একে v_π এর দ্বারা প্রকাশ করা হয়।<br>
-                    <img style="margin-left: 380px;" src="{% static "stateValue.jpg" %}">
-                    এখানে γ হল Discount factor. এর ভ্যালু ০ থেকে ১ এর ভেতর হয়ে থাকে। 
-                    Gained Reward যেন future state-এর reward দ্বারা কম প্রভাবিত হয় এজন্য এটা ব্যবহার করা হয়। k হল স্টেট সংখ্যা।<br>
+                    <img style="margin-left: 380px;" src="{% static "stateValue.jpg" %}"><br>
+                    এখানে γ হল Discount factor. এর ভ্যালু ০ থেকে ১ এর ভেতর হয়ে থাকে।
+                    Gained Reward যেন future state-এর reward দ্বারা কম প্রভাবিত হয় এজন্য এটা ব্যবহার করা হয়। k হল স্টেট সংখ্যা।<br><br>
                     <span class="deep-orange-text text-darken-2">Action-value function:</span> কোন স্টেটে থাকা অবস্থায় agent-এর জন্য কোন action-টা ভালো বা খারাপ সেটা বের করা হয় Action-value function-এর দ্বারা। একে Q-functionও বলা হয়।
                     Policy, Q-function এর উপরেও নির্ভর করে। তাই একে q_π দ্বারা প্রকাশ করা হয়।<br>
                     <img style="margin-left: 380px;" src="{% static "Qfunction.jpg" %}"><br><br>
                     Agent-এর জন্য কোন স্টেট ভালো সেটা বোঝা যায় state-value function এর Expected return value দিয়ে আর কোন স্টেটে কোন action-টা ভালো সেটা বোঝা যায় action-value function এর Expected return value দিয়ে। 
                     এই দুই Expected return value, Policy-কে অনেক influence করে।<br><br>
-                    Reinforcement Learning এর সাহায্যে একটি Optimal Policy খুঁজে বের করাটাই আমাদের মুল উদ্দেশ্য। 
-                    Q-learning মুলত optimal Q-function-কে খুঁজে বের করার মাধ্যমে Optimal Policy খুঁজে বের করে।<br>
+                    <span class="deep-orange-text text-darken-2">একটি Optimal Policy খুঁজে বের করাটাই আমাদের মুল উদ্দেশ্য। 
+                    Optimal Policy খুঁজে বের করার জন্য Q-learning সাহায্যে optimal Q-function-কে খুঁজে বের করা হয়।</span><br>
                     <img style="margin-left: 380px;" src="{% static "optimalPolicy.jpg" %}"><br><br>
                     এবার আমরা জানব, Q-learning কিভাবে কাজ করে।<br>
                     Agent প্রথমে Environment-কে explore করবে তারপর exploit করবে।
@@ -45,7 +45,7 @@
                     সূত্রটি নিম্নরূপঃ<br>
                     <span><img style="margin-left: 380px;" src="{% static "bellman.jpg" %}"><br><br>
                     মনে করুন, পূর্ববর্তী q-value হল q আর আপডেটেড q-value হল q_*। সুতরাং,<br>
-                    <img style="margin-left: 380px;" src="{% static "lossFunctionQlearning.jpg" %}"><br>
+                    <img style="margin-left: 290px;" src="{% static "lossFunctionQlearning.jpg" %}"><br>
                     নিম্নলিখিত প্রসেস দুইটি iteratively চালাতে চালাতে এই loss কে যতটা সম্ভব ০ এর কাছেকাছি নিয়ে আসব।<br>
                     <img style="margin-left: 380px;" src="{% static "iteration.jpg" %}"><br>
                     এভাবেই Q-learning এর সাহায্যে optimal Q-function বের করা হয়।    
