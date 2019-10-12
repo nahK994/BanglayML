@@ -2,9 +2,10 @@
 
 {% block body %}
 {% load static %}
+<title>K-means clustering-BanglayML</title>
 <div class="row">
     <div class="col">
-        <div class="card">
+        <div class="card z-depth-5">
             <div class="card-content">
                 <span class="card-title center-align deep-orange-text text-darken-2">K-means clustering</span>
                 <p class="center-left">
@@ -222,8 +223,10 @@
             </div>
             যেহেতু ডাটা পয়েন্টের ক্লাস্টার এখনও আগের মতই আছে। তাই আমরা এখন নিশ্চিতভাবে বলতে পারি যে, (9, 8), (10, 11) প্রথম ক্লাস্টারের অন্তর্ভুক্ত এবং এর centroid (2, 1.67)।
             (1, 1), (2, 2), (3, 2) দ্বিতীয় ক্লাস্টারের অন্তর্ভুক্ত এবং এর centroid (9.5, 9.5)। <br><br> 
-            <span class="deep-orange-text text-darken-2">Objective function</span>,<br><img style="margin-left: 200px;" src="{% static "kmeansclusteringobjfunc.jpg" %}"><br>
-            <span class="deep-orange-text text-darken-2">Optimal objective function</span>, <br><img style="margin-left: 200px;" src="{% static "optimalclusteringobjfunc.jpg" %}"><br><br>
+            <span class="deep-orange-text text-darken-2">Objective function</span>,<br>
+            <img class="materialboxed" style="margin: auto;" width="500" src="{% static "kmeansclusteringobjfunc.jpg" %}"><br>
+            <span class="deep-orange-text text-darken-2">Optimal objective function</span>, <br>
+            <img  class="materialboxed" width="500" style="margin: auto;" src="{% static "optimalclusteringobjfunc.jpg" %}"><br>
             এখন ধরুন আপনাকে ইচ্ছামত হোটেল বসানোর সুযোগ দেওয়া হল। তাহলে কতগুলো হোটেল বসানো optimal হবে? 
             এটা বের করা হয় elbow method এর দ্বারা।<br><br>
             <span class="deep-orange-text text-darken-2">Elbow method</span> অনেকটা এরকম যে, ডাটা পয়েন্টগুলোকে ১টি ক্লাস্টারে ভাগ করে কস্ট বের করব। 
