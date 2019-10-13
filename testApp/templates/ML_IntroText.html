@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block body %}
 <title>ML-এ হাতেখড়ি</title>
 <div class="row">
-    <div class="col">
+    <div class="col s10 push-s1">
         <div class="card z-depth-5">
             <div class="card-content">
                 <span class="card-title center-align deep-orange-text text-darken-2">ML-এ হাতেখড়ি</span>
@@ -20,7 +20,7 @@
                     আপনি বলতে পারবেন না? অবশ্যই পারবেন।<br>
                     উদাহরন ২-আপনাকে একটি টেবিল দেওয়া হলঃ<br>
       <div class="row">
-        <div class="col s4 m3">      
+        <div class="col s3 pull-s1">      
         <table class="highlight striped centered" style="margin-left: 430px;">
         <thead>
           <tr>
@@ -72,9 +72,11 @@
                 আবার উদাহরণ-২ এর টেবিলে দেওয়া চকলেটের সংখ্যা হল ডাটা আর চকলেটের দাম হল level।<br><br>
                 উদাহরণ-১ এ যেটা দেখানো হয়ে সেটাকে বলে ক্লাসিফিকেশন প্রবলেম আর উদাহরণ-২ এ যেটা দেখানো হয়েছে সেটা হল রিগ্রেশন প্রবলেম। 
                 Supervised Leaning- চ্যাপ্টারে এগুলো বিস্তারিত আলোচনা করা হবে।<br><br>
-                <span class="deep-orange-text text-darken-2">Unsupervised Learning</span>: কম্পিউটারকে যদি Unleveled data দিয়ে ট্রেইন করা হয় তাহলে সেটাকে বলে Unsupervised Learning। 
-                এখানে কম্পিউটার নিজেই ডাটার ভেতর থেকে সামঞ্জস্য বের করে ট্রেনিং ডাটাকে কতগুলো ক্লাস্টারে ভাগ করে নেয়। Unsupervised Learning এর একটি জনপ্রিয় উদাহরণ হল K-means clustering।<br><br>
-                <span class="deep-orange-text text-darken-2">Reinforcement Learning</span>: এটি মুলত Supervised আর Unsupervised Learning এর মাঝামাঝি দিয়ে যায়। 
+                <span class="deep-orange-text text-darken-2">Unsupervised Learning</span>: Unsupervised Learning এর ক্ষেত্রে কম্পিউটার নিজেই unlabeled data ডাটা থেকে প্যাটার্ন, সাদৃশ্যতা, বিসাদৃশ্যতা ইত্যাদি খুঁজে বের করে নেয়। 
+                 প্রয়োজন অনুযায়ী ট্রেনিং ডাটাকে কতগুলো ক্লাস্টারে ভাগও করে নেয়। Unsupervised Learning এর একটি জনপ্রিয় উদাহরণ হল K-means clustering।<br><br>
+                 <img class="materialboxed" style="margin: auto;" width="600" src="{% static "kmeansPic.png" %}">
+                 উপরের ছবিতে Final Results-এ যে সবুজ, কমলা আর বেগুনি রঙের বড় বৃত্ত দেখতে পারছেন, ঐগুলো ঐ ক্লাস্টারের centroid।<br><br>
+                 <span class="deep-orange-text text-darken-2">Reinforcement Learning</span>: এটি মুলত Supervised আর Unsupervised Learning এর মাঝামাঝি দিয়ে যায়। 
                 এখানে একজন এজেন্ট থাকে যে Environment এর সাথে বিভিন্নভাবে Interact করে এবং এই Interaction এর জন্য reward collect করে। 
                 তারপর এই reward উপর ভিত্তি করে কম্পিউটার বুঝে নিবে কখন, কি ধরনের Interaction এর জন্য ম্যাক্সিমাম reward পাওয়া যাবে।
                 </p>
