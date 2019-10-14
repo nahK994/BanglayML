@@ -1,6 +1,7 @@
 {% load static %}
 <html>
 	<head>
+	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/bn_IN/sdk.js#xfbml=1&version=v4.0"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
@@ -16,6 +17,7 @@
 	<script>
 		$(document).ready(function(){
 			$('.materialboxed').materialbox();
+			$('.collapsible.expandable').collapsible({'accordion':false});
   		});
 	</script>
 

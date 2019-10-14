@@ -2,58 +2,70 @@
 {% block body %}
 {% load static %}
 <title>Q learning-BanglayML</title>
+
 <div class="row">
-    <div class="col s10 push-s1">
-        <div class="card z-depth-5">
-            <div class="card-content">
-                <span class="card-title center-align deep-orange-text text-darken-2">Q-Learning algorithm</span>
-                <p class="center-left">
-                    আজ আমরা Reinforcement Learning- এর Q-learning- সম্পর্কে জানব।
-                    কোন একটা নির্দিষ্ট স্টেটে কোন action/decision নিলে টোটাল reward ম্যাক্সিমাম হবে, সেটা Q-learning এর সাহায্যে বের করা হয়।
-                    এর সাহায্যে state-action pair-কে ম্যাপ তৈরি করা যাতে Gained reward ম্যাক্সিমাম হয়।<br><br>
-                    Q-learning সম্পর্কে জানার আগে আমরা কিছু কিছু ছোট ছোট বিষয় সম্পর্কে জেনে নিব।<br>
-                    <span class="deep-orange-text text-darken-2">Policy:</span> Policy মুলত কোন একটা নির্দিষ্ট স্টেটে থাকা অবস্থায় অই স্টেট থেকে সম্ভাব্য সকল প্রকার action-এর probability-কে ম্যাপ করে। 
-                    একে π দিয়ে প্রকাশ করা হয়।<br>
-                    <img class="materialboxed" style="margin: auto;" src="{% static "policy.jpg" %}"><br><br>
-                    <span class="deep-orange-text text-darken-2">State-value function:</span> কোন স্টেট agent-এর কতটা ভালো বা খারাপ এটা বের করা হয় স্টেট ভ্যালু ফাংশন দিয়ে। 
-                    Policy, State-value function- এর উপর নির্ভর করে।
-                    তাই একে v_π এর দ্বারা প্রকাশ করা হয়।<br>
-                    <img class="materialboxed" style="margin: auto;" src="{% static "stateValue.jpg" %}"><br>
-                    এখানে γ হল Discount factor. এর ভ্যালু ০ থেকে ১ এর ভেতর হয়ে থাকে।
-                    Gained Reward যেন future state-এর reward দ্বারা কম প্রভাবিত হয় এজন্য এটা ব্যবহার করা হয়। k হল স্টেট সংখ্যা।<br><br>
-                    <span class="deep-orange-text text-darken-2">Action-value function:</span> কোন স্টেটে থাকা অবস্থায় agent-এর জন্য কোন action-টা ভালো বা খারাপ সেটা বের করা হয় Action-value function-এর দ্বারা। একে Q-functionও বলা হয়।
-                    Policy, Q-function এর উপরেও নির্ভর করে। তাই একে q_π দ্বারা প্রকাশ করা হয়।<br>
-                    <img class="materialboxed" style="margin: auto;" src="{% static "Qfunction.jpg" %}"><br><br>
-                    Agent-এর জন্য কোন স্টেট ভালো সেটা বোঝা যায় state-value function এর Expected return value দিয়ে আর কোন স্টেটে কোন action-টা ভালো সেটা বোঝা যায় action-value function এর Expected return value দিয়ে। 
-                    এই দুই Expected return value, Policy-কে অনেক influence করে।<br><br>
-                    <span class="deep-orange-text text-darken-2">একটি Optimal Policy খুঁজে বের করাটাই আমাদের মুল উদ্দেশ্য। 
-                    Optimal Policy খুঁজে বের করার জন্য Q-learning সাহায্যে optimal Q-function-কে খুঁজে বের করা হয়।</span><br>
-                    <img class="materialboxed" style="margin: auto;" src="{% static "optimalPolicy.jpg" %}"><br><br>
-                    এবার আমরা জানব, Q-learning কিভাবে কাজ করে।<br>
-                    Agent প্রথমে Environment-কে explore করবে তারপর exploit করবে।
-                    মনে করুন, এখানে Agent হল টিকটিকি। সে শুধু ডানে, বামে, উপরে, নিচে যেতে পারে। 
-                    যদি ওটা ১টা পোকার ঘরে যায় তাহলে reward পাবে +১। যদি ফাকা ঘরে যায় তাহলে পাবে -১। 
-                    যদি পাখির ঘরে যায় তাহলে পাবে -১০ মানে খেলা শেষ আর যদি ৫টা পোকার ঘরে যায় তাহলে পাবে +১০ মানে খেলায় জিতে গেল।<br>
-                    Reinforcement Learning দিয়ে আমরা এমন একটা Policy তৈরি করব যেন তা ম্যাক্সিয়াম reward gain করে অর্থ্যাৎ optimal way-তে ৫টি পোকার ঘরে পৌছায়।
-                    টিকটিকিটা ৫ নম্বর ঘর থেকে যাত্রা শুরু করে। exploration-এর সময় agent ৫ নম্বর ঘর থেকে বিভিন্ন ঘরে গিয়ে দেখে কোন ঘরে গেলে কত reward পাওয়া যাবে।
-                    কিন্তু এই exploration আর exploitation- কে তো balance করা দরকার।<br><br>
-                    exploration-exploitation balance করার জন্য আছে <span class="deep-orange-text text-darken-2">Epsilon greedy strategy</span>. 
-                    এখানে ∈ একটি ভ্যারিয়েবল আছে যেটার ভ্যালু ০ থেকে ১ এর ভেতর হয়ে থাকে। 
-                    ভ্যালু ১ মানে explore করার সম্ভাবনা ১০০% আর ভ্যালু ০ মানে exploit করার সম্ভাবনা ১০০%। 
-                    আমরা আমাদের implementation একটা random threshold value, r ধরে নিব আর প্রতিটা episode- এ ∈ এর মান কমাতে থাকব। 
-                    কমতে কমতে যখন r এর নিচে চলে যাবে তখন থেকে exploitation করা শুরু করব।<br><br>
-                    Exploitation- এর সময় আমরা optimal Q-function বের করব।  <span class="deep-orange-text text-darken-2">Bellman optimality equation</span> দিয়ে Optimal Q-function বের করা হয়। 
-                    সূত্রটি নিম্নরূপঃ<br>
-                    <span><img class="materialboxed" style="margin: auto;" src="{% static "bellman.jpg" %}"><br><br>
-                    মনে করুন, পূর্ববর্তী q-value হল q আর আপডেটেড q-value হল q_*। সুতরাং,<br>
-                    <img class="materialboxed" style="margin: auto;" src="{% static "lossFunctionQlearning.jpg" %}"><br>
-                    নিম্নলিখিত প্রসেস দুইটি iteratively চালাতে চালাতে এই loss কে যতটা সম্ভব ০ এর কাছেকাছি নিয়ে আসব।<br>
-                    <img class="materialboxed" style="margin: auto;" src="{% static "iteration.jpg" %}"><br>
-                    এভাবেই Q-learning এর সাহায্যে optimal Q-function বের করা হয়।    
-                </p>
+        <div class="col s10 push-s1">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title center-align deep-orange-text text-darken-2">Q-Learning algorithm</span>
+                    <div class="fb-like" data-href="http://127.0.0.1:8000/RL_Q_learningText/" data-width="" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+                    <ul class="collapsible expandable">
+                        <li class="active">
+                            <div class="collapsible-header blue lighten-5" style="font-size: 20px;">Blog</div>
+                                <div class="collapsible-body">
+                                    <p class="center-left">
+                                        আজ আমরা Reinforcement Learning- এর Q-learning- সম্পর্কে জানব।
+                                        কোন একটা নির্দিষ্ট স্টেটে কোন action/decision নিলে টোটাল reward ম্যাক্সিমাম হবে, সেটা Q-learning এর সাহায্যে বের করা হয়।
+                                        এর সাহায্যে state-action pair-কে ম্যাপ তৈরি করা যাতে Gained reward ম্যাক্সিমাম হয়।<br><br>
+                                        Q-learning সম্পর্কে জানার আগে আমরা কিছু কিছু ছোট ছোট বিষয় সম্পর্কে জেনে নিব।<br>
+                                        <span class="deep-orange-text text-darken-2">Policy:</span> Policy মুলত কোন একটা নির্দিষ্ট স্টেটে থাকা অবস্থায় অই স্টেট থেকে সম্ভাব্য সকল প্রকার action-এর probability-কে ম্যাপ করে। 
+                                        একে π দিয়ে প্রকাশ করা হয়।<br>
+                                        <img class="materialboxed" style="margin: auto;" src="{% static "policy.jpg" %}"><br><br>
+                                        <span class="deep-orange-text text-darken-2">State-value function:</span> কোন স্টেট agent-এর কতটা ভালো বা খারাপ এটা বের করা হয় স্টেট ভ্যালু ফাংশন দিয়ে। 
+                                        Policy, State-value function- এর উপর নির্ভর করে।
+                                        তাই একে v_π এর দ্বারা প্রকাশ করা হয়।<br>
+                                        <img class="materialboxed" style="margin: auto;" src="{% static "stateValue.jpg" %}"><br>
+                                        এখানে γ হল Discount factor. এর ভ্যালু ০ থেকে ১ এর ভেতর হয়ে থাকে।
+                                        Gained Reward যেন future state-এর reward দ্বারা কম প্রভাবিত হয় এজন্য এটা ব্যবহার করা হয়। k হল স্টেট সংখ্যা।<br><br>
+                                        <span class="deep-orange-text text-darken-2">Action-value function:</span> কোন স্টেটে থাকা অবস্থায় agent-এর জন্য কোন action-টা ভালো বা খারাপ সেটা বের করা হয় Action-value function-এর দ্বারা। একে Q-functionও বলা হয়।
+                                        Policy, Q-function এর উপরেও নির্ভর করে। তাই একে q_π দ্বারা প্রকাশ করা হয়।<br>
+                                        <img class="materialboxed" style="margin: auto;" src="{% static "Qfunction.jpg" %}"><br><br>
+                                        Agent-এর জন্য কোন স্টেট ভালো সেটা বোঝা যায় state-value function এর Expected return value দিয়ে আর কোন স্টেটে কোন action-টা ভালো সেটা বোঝা যায় action-value function এর Expected return value দিয়ে। 
+                                        এই দুই Expected return value, Policy-কে অনেক influence করে।<br><br>
+                                        <span class="deep-orange-text text-darken-2">একটি Optimal Policy খুঁজে বের করাটাই আমাদের মুল উদ্দেশ্য। 
+                                        Optimal Policy খুঁজে বের করার জন্য Q-learning সাহায্যে optimal Q-function-কে খুঁজে বের করা হয়।</span><br>
+                                        <img class="materialboxed" style="margin: auto;" src="{% static "optimalPolicy.jpg" %}"><br><br>
+                                        এবার আমরা জানব, Q-learning কিভাবে কাজ করে।<br>
+                                        Agent প্রথমে Environment-কে explore করবে তারপর exploit করবে।
+                                        মনে করুন, এখানে Agent হল টিকটিকি। সে শুধু ডানে, বামে, উপরে, নিচে যেতে পারে। 
+                                        যদি ওটা ১টা পোকার ঘরে যায় তাহলে reward পাবে +১। যদি ফাকা ঘরে যায় তাহলে পাবে -১। 
+                                        যদি পাখির ঘরে যায় তাহলে পাবে -১০ মানে খেলা শেষ আর যদি ৫টা পোকার ঘরে যায় তাহলে পাবে +১০ মানে খেলায় জিতে গেল।<br>
+                                        Reinforcement Learning দিয়ে আমরা এমন একটা Policy তৈরি করব যেন তা ম্যাক্সিয়াম reward gain করে অর্থ্যাৎ optimal way-তে ৫টি পোকার ঘরে পৌছায়।
+                                        টিকটিকিটা ৫ নম্বর ঘর থেকে যাত্রা শুরু করে। exploration-এর সময় agent ৫ নম্বর ঘর থেকে বিভিন্ন ঘরে গিয়ে দেখে কোন ঘরে গেলে কত reward পাওয়া যাবে।
+                                        কিন্তু এই exploration আর exploitation- কে তো balance করা দরকার।<br><br>
+                                        exploration-exploitation balance করার জন্য আছে <span class="deep-orange-text text-darken-2">Epsilon greedy strategy</span>. 
+                                        এখানে ∈ একটি ভ্যারিয়েবল আছে যেটার ভ্যালু ০ থেকে ১ এর ভেতর হয়ে থাকে। 
+                                        ভ্যালু ১ মানে explore করার সম্ভাবনা ১০০% আর ভ্যালু ০ মানে exploit করার সম্ভাবনা ১০০%। 
+                                        আমরা আমাদের implementation একটা random threshold value, r ধরে নিব আর প্রতিটা episode- এ ∈ এর মান কমাতে থাকব। 
+                                        কমতে কমতে যখন r এর নিচে চলে যাবে তখন থেকে exploitation করা শুরু করব।<br><br>
+                                        Exploitation- এর সময় আমরা optimal Q-function বের করব।  <span class="deep-orange-text text-darken-2">Bellman optimality equation</span> দিয়ে Optimal Q-function বের করা হয়। 
+                                        সূত্রটি নিম্নরূপঃ<br>
+                                        <span><img class="materialboxed" style="margin: auto;" src="{% static "bellman.jpg" %}"><br><br>
+                                        মনে করুন, পূর্ববর্তী q-value হল q আর আপডেটেড q-value হল q_*। সুতরাং,<br>
+                                        <img class="materialboxed" style="margin: auto;" src="{% static "lossFunctionQlearning.jpg" %}"><br>
+                                        নিম্নলিখিত প্রসেস দুইটি iteratively চালাতে চালাতে এই loss কে যতটা সম্ভব ০ এর কাছেকাছি নিয়ে আসব।<br>
+                                        <img class="materialboxed" style="margin: auto;" src="{% static "iteration.jpg" %}"><br>
+                                        এভাবেই Q-learning এর সাহায্যে optimal Q-function বের করা হয়।    
+                                    </p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="collapsible-header blue lighten-5" style="font-size: 20px;">মন্তব্য করুন...</div>
+                            <div class="collapsible-body"><div class="fb-comments" data-href="http://127.0.0.1:8000/RL_Q_learningText/" data-width="650" data-numposts="5"></div></div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-</div>
-                
 {% endblock %}
