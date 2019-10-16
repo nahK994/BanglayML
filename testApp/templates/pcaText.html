@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+<title>Dimendion Reduction-BanglayML</title>
+<div class="row">
+    <div class="col s10 push-s1">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title center-align deep-orange-text text-darken-2">Dimension Reduction: PCA</span>
+                
+                <ul class="collapsible expandable">
+                    <li class="active">
+                        <div class="collapsible-header blue lighten-5" style="font-size: 20px;">Blog</div>
+                            <div class="collapsible-body">
+                                <p class="center-left">
+                                    মনে করুন, আপনার তৈরি মডেলের ইনপুট ফিচার অনেক বেশী। সুতরাং যদি আপনি মডেলটি থেকে ভালো accuracy চান তাহলে হয় আপনাকে প্রচুর ডাটা দিয়ে মডেলটিকে ট্রেইন করতে হবে অথবা ইনপুট ফিচার কমিয়ে আনতে হবে। 
+                                    এখন যদি এমন হয় যে, ইনপুট ফিচার কমানো কোনভাবেই সম্ভব না আবার আপনার কাছে পর্যাপ্ত ডাটাসেটও নেই মডেলকে ট্রেইন করার জন্য। তাহলে আপনি আরেকটা উপায় আছে যাতে আপনি মডেলকে ভালভাবে ট্রেইন করতে পারেন, সেটি হল dimension reduction। 
+                                    ছোট্ট একটি উদাহরণ দিলে জিনিসটা আরও ক্লিয়ার হবে।<br><br>
+                                    মনে করুন, আপনি বাসা ভাড়া prediction করতে চাচ্ছেন। ইনপুট ফিচারগুলো হচ্ছে-<br>
+                                    • বাসার সাইজ<br>
+                                    • বাসার রুমের সাইজ(average)<br>
+                                    • শহর থেকে কতদুরে<br><br>
+                                    এখানে একটি জিনিস খেয়াল করে দেখুন যে, প্রথম দুইটা ফিচার বাসার রুমের প্রপার্টি আর তৃতীয় ফিচার বাসার লোকেশন প্রপার্টি। আর তাছাড়া বাসা যদি বড় হয় তাহলে রুমের average সাইজও বড়ই হবে। সেক্ষেত্রে আমরা প্রথম দুইটা ফিচারকে একই dimension-এ নিয়ে আসতে পারি। এভাবে প্রথম দুইটা ফিচারকে একই dimension-এ আনার মাধ্যমে আমরা 3-d ডাটাসেটকে 2-d ডাটাসেটে নিয়ে আনলাম।<br><br>
+                                    Dimension reduction-এর অনেকগুলো পদ্ধতি আছে। তার ভেতর একটি পদ্ধতি হল- Principal Component Analysis (PCA). ডাটা পয়েন্টকে n-dimension থেকে k-dimension নিয়ে আনার জন্য PCA-এর সাহায্যে k-টি ভেক্টর বের করা হয় যার উপর ডাটা পয়েন্টগুলোর projection error সবচেয়ে কম হয়।<br><br>
+                                    কখনও কখনও dimension ডাটা পয়েন্টগুলোর ভেতর দিয়েও চলে যেতে পারে তাই বলে একে linear regression মনে করবেন না। কারণ, linear regression-এ হাইপোথিসিস ডেভেলপ করা হয় square error function-কে minimum করার মাধ্যমে আর এখানে প্রতিটা ডাটা পয়েন্ট থেকে ভেক্টরের distance মিনিমাম করার মধ্য দিয়ে।<br><br>
+                                    <img class="materialboxed" style="margin: auto;" width="300" src="{% static "pca1.jpg" %}"><br>
+                                    উপরের ছবিতে দেখা যাচ্ছে, X-Y প্লেনের উপর তিনটি ডাটা পয়েন্ট। লাল রঙের রেখা দিয়ে u ⃗ ভেক্টর থেকে ডাটা পয়েন্টগুলোর দূরত্ব(projection error) দেখানো হয়েছে। কোন ডাটা পয়েন্ট থেকে লাল রেখাটি ভেক্টরের যে বিন্দুতে ছেদ করে সেটাই অই ভেক্টরের উপর ডাটা পয়েন্টের projection point.<br><br>
+                                    <img class="materialboxed" style="margin: auto;" width="300" src="{% static "pca2.jpg" %}"><br>
+                                    আবারও উপরের ছবিতে X-Y প্লেনের উপর তিনটি ডাটা পয়েন্ট দেখা যাচ্ছে। ডাটা পয়েন্টের মধ্য দিয়ে লিনিয়ার রিগ্রেশনের মাধ্যমে পাওয়া হাইপোথিসিস রেখা চলে গেছে। এখানে লাল রেখা দিয়ে ডাটা পয়েন্ট থেকে হাইপোথিসিসের error বোঝানো হয়েছে।<br><br>
+                                    এবার আমরা জানব PCA কিভাবে কাজ করে। PCA কিভাবে কাজ করে এটা জানার আগে ছোট ছোট কিছু জিনিস আগে জেনে নেওয়া দরকার।<br>
+                                    <span class="deep-orange-text text-darken-2">Mean:</span> আমরা সবাই কচিকালেই পড়েছি গড় কি। কতগুলো ডাটা(সংখ্যা) যোগ করে, সেই যোগফলকে ডাটার সংখ্যা দ্বারা ভাগ করলে গড় বের হয়। পরিসংখ্যানের ভাষায় একে গাণিতিক গড় বা Arithmetic Mean বলে।<br>
+                                    <img class="materialboxed" style="margin: auto;" src="{% static "pca3.jpg" %}"><br>
+                                    এর সাহায্যে ডাটা পয়েন্টগুলোর মাঝামাঝি পয়েন্ট খুঁজে বের করা হয়।<br>
+                                    <span class="deep-orange-text text-darken-2">Variance:</span> ডাটা পয়েন্টগুলো তাদের গড়মান থেকে কতখানি বিক্ষিপ্ত এটা পরিমাপ করা হয় variance-এর দ্বারা।<br> 
+                                    <img class="materialboxed" style="margin: auto;" src="{% static "pca4.jpg" %}"><br>
+                                    <span class="deep-orange-text text-darken-2">Covariance:</span> মনে করুন, আপনার কাছে একটি টেবিল দেওয়া আছে যেখানে X ও Y এর কিছু মান দেওয়া আছে।<br>
+                                    <div class="row">
+                                        <div class="col s3 pull-s1">      
+                                        <table class="highlight striped centered" style="margin-left: 430px;">
+                                        <thead>
+                                          <tr>
+                                              <th>X</th>
+                                              <th>Y</th>
+                                          </tr>
+                                        </thead>
+                                
+                                        <tbody>
+                                          <tr>
+                                            <td>১</td>
+                                            <td>২</td>
+                                          </tr>
+                                          <tr>
+                                            <td>২</td>
+                                            <td>৪</td>
+                                          </tr>
+                                          <tr>
+                                            <td>৩</td>
+                                            <td>৬</td>
+                                          </tr>
+                                          <tr>
+                                            <td>৪</td>
+                                            <td>৮</td>
+                                          </tr>
+                                          <tr>
+                                            <td>৫</td>
+                                            <td>১০</td>
+                                          </tr>
+                                          <tr>
+                                            <td>৬</td>
+                                            <td>১১</td>
+                                          </tr>
+                                          <tr>
+                                            <td>৭</td>
+                                            <td>১৩</td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                </div>
+                                আপনি জানতে চান যে, X সাথে সাথে Y- এর মান বাড়ে নাকি কমে নাকি X-এর মানের সাথে Y-এর মানের আদৌ কোন সম্পর্ক নেই। এটা বোঝা যাবে Covariance এর দ্বারা।<br>
+                                <img class="materialboxed" style="margin: auto;" src="{% static "pca5.jpg" %}"><br>
+                                COV(X, Y) এর মান যদি- <br>
+                                • ধনাত্নক হয়, তারমানে x ও y এর মান একই সাথে বৃদ্ধি পায়।<br>
+                                • ঋণাত্নক হয়, তারমানে x ও y এর যেকোন একজনের মান বাড়লে আরেকজনের কমে।<br>
+                                • শূন্য হয়, তারমানে x ও y এর মান কেও কারোর উপর নির্ভরশীল নয়।<br>
+                                এখানে ডাটা 2-d ছিল। এখন ডাটা যদি 3-d বা আরও বেশী dimension-এর হয়? 
+                                তখন আমরা covariance matrix এর সাহায্যে এটাকে প্রকাশ করব। ডাটা যদি 3-d হত তাহলে covariance matrix হত এরকম।<br>
+                                <img class="materialboxed" style="margin: auto;" src="{% static "pca6.jpg" %}"><br>
+                                এখানে, COV(X, X) হল Var(X)। আর COV(X, Y) = COV(Y, X)।<br>
+                                <span class="deep-orange-text text-darken-2">Eigen vector এবং eigen value:</span> এতক্ষণ আমরা যা দেখলাম সবই statistical measurement। Eigen vector আর eigen value- এর concept এসেছে linear algebra থেকে। নিচের উদাহরণটি দেখা যাক-<br>
+                                <img class="materialboxed" style="margin: auto;" src="{% static "pca7.jpg" %}"><br>
+                                প্রথমে আমরা 2x2 একটি ম্যাট্রিক্সের সাথে একটি কলাম ভেক্টর গুণ করে <img align="middle" width="35" src="{% static "pca8.jpg" %}"> পেলাম। 
+                                তারপর <img align="middle" width="35" src="{% static "pca8.jpg" %}">-কে একটি পূর্ণসংখ্যা, 7 ও পূর্বের কলাম ম্যাট্রিক্স <img align="middle" width="30" src="{% static "pca9.jpg" %}">- গুণন আকারে প্রকাশ করলাম। এখানে <img align="middle" width="30" src="{% static "pca9.jpg" %}">- 
+                                হচ্ছে <img align="middle" width="50" src="{% static "pca10.jpg" %}">-এর eigen vector এবং 7-হচ্ছে এর eigen value।<br><br>
+                                Eigen vector সম্পর্কে কিছু গুরুত্বপূর্ণ তথ্যঃ<br>
+                                • কেবল স্কয়ার ম্যাট্রিক্সেরই eigen vector থাকে। তবে সব স্কয়ার ম্যাট্রিক্সের eigen vector থাকে না।<br>
+                                • NxN ম্যাট্রিক্সের N- টি eigen vector থাকবে।<br>
+                                • প্রতিটি eigen vector- এর জন্য একটি eigen value থাকবে।<br><br>
+                                (Eigen vector, eigen value নিয়ে আর ডিটেইল আলোচনায় যাচ্ছি না। কারণ, আপাতত খুব একটা জরুরী না। তবে যদি আরও জানতে চান তাহলে ব্লগের শেষে Recommendation সেকশনে দেওয়া লিংকগুলো ফলো করতে পারেন। যদি এটা নিয়ে আলাদা ব্লগ লিখি তাহলে সেখানেও দেখতে পারবেন।) <br><br>
+                                এখন আমরা জানব কিভাবে PCA করতে হয়। মনে করুন, আমাদের কাছে N-dimensional কতগুলো ডাটা পয়েন্ট আছে। আমরা PCA-এর মাধ্যমে N-dimensional ডাটা পয়েন্টকে k-dimension-এ নামিয়ে নিয়ে আনব।<br>
+                                • আমরা প্রথমে ডাটা পয়েন্টগুলোর সাহায্যে একটি Covariance matrix বের করব।<br>
+                                • সেই Covariance matrix এর eigen vector, eigen value বের করব।<br>
+                                • তারপর eigen value-কে বড় থেকে ছোট ক্রমানুসারে সাজাব।(PCA-এর আসল উদ্দেশ্য হল কোন কোন অক্ষ বরাবর ডাটা পয়েন্টগুলোর variance সবচেয়ে বেশী এটা খুঁজে বের করা। eigen value বড় মানে eigen value সংশ্লিষ্ট ভেক্টর বরাবর ডাটা পয়েন্টগুলোর variance সবচেয়ে বেশী।)<br>
+                                • প্রথম k- সংখ্যক eigen value-র সংশ্লিষ্ট eigen vector কে dimension/principal component হিসেবে নিয়ে ডাটা পয়েন্টগুলো প্লট করি।<br>
+                                এভাবেই আমরা Principal Component Analysis করতে পারি।<br><br>
+                                Dimension reduction মানেই ইনফরমেশন লস। সুতরাং, মিনিমাম ইনফরমেশন লস করে আপনি আপনার সুবিধামত k-এর মান ধরে নিবেন।<br><br>
+                                তারপরও eigen value অনুযায়ী সাজানোর পর কতদুর পর্যন্ত component গুলোকে নিব সেটা বের করার কিছু পদ্ধতি আছে।<br>
+                                ১। যেসব component এর eigen value ১ এর বেশী।<br>
+                                ২। যেসব component পুরো variance-এর ৭০-৮০% ভাগ carry করে।<br>
+                                ৩। Scree plot- এটা একটি গ্রাফিক্যাল মেথড।
+                                </p>
+                        </div>
+                    </li>
+                    <li>
+                      <div class="collapsible-header blue lighten-5" style="font-size: 20px;">Recommendation</div>
+                      <div class="collapsible-body">
+                          <a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&fbclid=IwAR0dbykwRvEKAQ1PR2BO-kJcBrzO-DVhlLnN9jQUnSaNSNr-EvHN3M4ay5U">3Blue1Brown - Essence of linear algebra</a><br>
+                          <a href="https://medium.com/fintechexplained/what-are-eigenvalues-and-eigenvectors-a-must-know-concept-for-machine-learning-80d0fd330e47">medium - FinTechExplained</a>
+                      </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header blue lighten-5" style="font-size: 20px;">আপনার মতামত জানান.....</div>
+                        <div class="collapsible-body">
+                            <div class="fb-like" data-href="http://127.0.0.1:8000/pcaText/" data-width="" data-layout="standard" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div><br><br>
+                            <div class="fb-comments" data-href="http://127.0.0.1:8000/pcaText/" data-width="550" data-numposts="5"></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

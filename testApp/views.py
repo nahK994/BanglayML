@@ -26,3 +26,6 @@ class RL_Q_learningText(TemplateView):
 
 class k_means_clusteringText(TemplateView):
     template_name = "k_means_clusteringText.html"
+
+class pcaText(TemplateView):
+    template_name = "pcaText.html"
