@@ -29,3 +29,6 @@ class k_means_clusteringText(TemplateView):
 
 class pcaText(TemplateView):
     template_name = "pcaText.html"
+
+class DQN_IntroText(TemplateView):
+    template_name = "DQN_IntroText.html"

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+<title>Dimendion Reduction-BanglayML</title>
+<div class="row">
+    <div class="col s10 push-s1">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title center-align deep-orange-text text-darken-2">DQN এ হাতেখড়ি</span>
+                
+                <ul class="collapsible expandable">
+                    <li class="active">
+                        <div class="collapsible-header blue lighten-5" style="font-size: 20px;">Blog</div>
+                            <div class="collapsible-body">
+                                <p class="center-left">
+                                    আপনারা নিশ্চয়ই সবাই কমবেশী batman কে চেনেন। গথাম শহরে কখনও ডিটেকটিভ হিসেবে কাজ করে, কখনও রাতের বেলা রাতের বেলা ক্রাইম ফাইটার হিসেবে কাজ করে। 
+                                    মনে করুন, আজ সে গথাম শহরের কুখ্যাত ক্রাইম লর্ড পেঙ্গুইনকে পুলিশের হাতে তুলে দিয়েছে। তাই সে অনেক ক্লান্ত। আজ রাতে সে বাসায় গিয়ে বিশ্রাম নিবে। কিন্তু গথাম শহরের জায়গায় জায়গায় কোন না কোন ছোটখাট ছিনতাই হতেই থাকে। 
+                                    নিচের গ্রিডে batman এর বর্তমান অবস্থান ও তার বাড়ির অবস্থান দেখতে পারছেন। গ্রিডে দেওয়া সংখ্যা দিয়ে বোঝানো হয়েছে কোন জায়গায় কতজন মানুষ ছিনতাইকারীর হাতে পড়েছে। batman শুধু উপরে আর ডানদিকে মুভ করতে পারে। 
+                                    সে চায় বাড়ি যাওয়ার পথে সে স্যাক্সিমাম সংখ্যক মানুষকে ছিনতাইকারীর হাত থেকে বাচাবে। কোন রাস্তা দিয়ে গেলে তার জন্য ভালো হয়?<br><br>
+                                    <img class="materialboxed" style="margin: auto;" width="200" src="{% static "dqnIntro1.jpg" %}"><br>
+                                    এই প্রবলেমটি আমরা Q-learning দিয়ে সল্ভ করতে পারি। এখানে state সংখ্যা 16. Action সংখ্যা 2টি, হত ডানদিকে অথবা উপরে। 
+                                    আর কোন জায়গায় গেলে কত reward পাবে সেটা তো গ্রিডে দেওয়াই আছে। Q-table এর সাইজ হবে 16x2.<br><br>
+                                    এখন আপনারা হয়ত মনে মনে ভাবছেন, শুধু শুধু মশা মারতে কামান দাগা। batman এর পজিশন থেকে একটা dijkstra ছেড়ে দিলেই হয়।<br><br>
+                                    আসলেই তাই। আমাদের আরও বড়কিছু নিয়ে চিন্তা করা উচিত। যেমন দাবা খেলা। তাই না? কিন্তু সমস্যা হচ্ছে, দাবা খেলায় agent এর কাছে থাকে 16 টি গুটি। আবার অই 16টি গুটির জন্য যে নির্দিষ্ট একটি action এমনও না। 
+                                    দেখা যাবে একটি গুটির কয়েকটি চাল থাকতে পারে। এবার আসি state নিয়ে। state তৈরী হবে দাবার বোর্ডের উপর প্রতিটি গুটির (agent এবং opponent) অবস্থানের উপর নির্ভর করে।<br><br>
+                                    উপরের batman প্রবলেমে state আর action সংখ্যা ছিল অনেক কম। তাই এখানে Q-learning apply করা যায়। কিন্তু দাবা খেলার জন্য Q-learning একেবারেই inefficient. এক্ষেত্রে Q-table এর সাইজ অনেক অনেক বড়, বলতে গেলে unpredictable। সেটা আপডেট করা তো..................<br><br>
+                                    তাহলে আমরা এখন কি করতে পারি? যেহেতু আমাদের state, action একেবারেই almost unpredictable. তাই আমরা Q-value iteratively compute করে optimal Q-function বের না করে, একটা approximator function এর সাহায্যে এর মান প্রিডিক্ট করে নিব।<br><br>
+                                    এই approximator function টা হল ডিপ নিউরাল নেটওয়ার্ক। অর্থাৎ, একটি ডিপ নিউরাল নেটওয়ার্ক দিয়ে আমরা Q-value এর মান বের করে একটি approximate optimal Q-function বের করব। 
+                                    এভাবে Q-learning এর সাথে ডিপ নিউরাল নেটওয়ার্কের combination কে বলে <span class="deep-orange-text text-darken-2">deep Q-learning</span> আর এই নিউরাল নেটওয়ার্ককে বলে <span class="deep-orange-text text-darken-2">deep Q-network</span> বা <span class="deep-orange-text text-darken-2">DQN</span>.<br><br>
+                                    <img class="materialboxed" style="margin: auto;" width="600" src="{% static "dqnIntro2.jpg" %}"><br>
+                                    Deep Q-Network এ ইনপুট হিসেবে যায় state আর আউটপুট হিসেবে ঐ state এ প্রতিটি action এর estimated Q-value আউটপুট হিসেবে আসে। inner layer গুলোও এমন নতুন কিছু না। নরমাল নিউরাল নেটওয়ার্কের মত এখানেও inner layer এর প্রতিটা নোডে activation function থাকে।<br><br>
+                                    আমাদের মূল উদ্দেশ্য হল, আমাদের estimated optimal Q-function যেন Bellman equation- <img align="middle" width="280" src="{% static "dqnIntro3.jpg" %}"> কে মেনে চলে। 
+                                    সুতরাং, loss function টা হবে DQN- এর আউটপুট আর <img align="middle" width="60" src="{% static "dqnIntro4.jpg" %}"> এর পার্থক্যের বর্গের 1/2N গুণ। এখানে N হল টোটাল ট্রেনিং ডাটা সংখ্যা।<br><br>
+                                    এরপর বারবার iteration করে Stochastic Gradient Descent(SGD) ও Backpropagation এর মাধ্যমে DQN-এর edge এর weight গুলোকে এমনভাবে আপডেট করা হয় যেন loss যথেষ্ট পরিমাণ কমিয়ে আনা সম্ভব হয়। একদম নরমাল নিউরাল নেটওয়ার্কের মতই।<br>
+                                    <img class="materialboxed" style="margin: auto;"  width="400" src="{% static "dqnIntro5.jpg" %}"><br>
+                                    এখন প্রশ্ন হল, ট্রেনিং ডাটা পাব কিভাবে? ট্রেনিং ডাটাও তো আগের মতই calculate করে বের করতে হবে। তাই না?<br><br>
+                                    আমরা আস্তে আস্তে এর উত্তর জানতে পারব। আজকের মত এ পর্যন্তই।
+                                </p>
+                            </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header blue lighten-5" style="font-size: 20px;">আপনার মতামত জানান.....</div>
+                        <div class="collapsible-body">
+                            <div class="fb-like" data-href="http://127.0.0.1:8000/DQN_IntroText/" data-width="" data-layout="standard" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div><br><br>
+                            <div class="fb-comments" data-href="http://127.0.0.1:8000/DQN_IntroText/" data-width="550" data-numposts="5"></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
