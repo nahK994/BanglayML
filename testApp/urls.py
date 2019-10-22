@@ -13,5 +13,6 @@ urlpatterns = [
     path('RL_Q_learningText/', views.RL_Q_learningText.as_view(), name="RL_Q_learningText"),
     path('k_means_clusteringText/', views.k_means_clusteringText.as_view(), name="k_means_clusteringText"),
     path('pcaText/', views.pcaText.as_view(), name="pcaText"),
-    path('DQN_IntroText/', views.DQN_IntroText.as_view(), name="DQN_IntroText")
+    path('DQN_IntroText/', views.DQN_IntroText.as_view(), name="DQN_IntroText"),
+    path('DQN_TrainingText/', views.DQN_TrainingText.as_view(), name="DQN_TrainingText")
 ]

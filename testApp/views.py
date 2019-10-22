@@ -32,3 +32,6 @@ class pcaText(TemplateView):
 
 class DQN_IntroText(TemplateView):
     template_name = "DQN_IntroText.html"
+
+class DQN_TrainingText(TemplateView):
+    template_name = "DQN_TrainingText.html"
