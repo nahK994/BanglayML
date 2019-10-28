@@ -15,5 +15,6 @@ urlpatterns = [
     path('pcaText/', views.pcaText.as_view(), name="pcaText"),
     path('DQN_IntroText/', views.DQN_IntroText.as_view(), name="DQN_IntroText"),
     path('DQN_TrainingText/', views.DQN_TrainingText.as_view(), name="DQN_TrainingText"),
-    path('LinearRegressionText/', views.LinearRegressionText.as_view(), name="LinearRegressionText")
+    path('LinearRegressionText/', views.LinearRegressionText.as_view(), name="LinearRegressionText"),
+    path('LogisticRegressionText/', views.LogisticRegressionText.as_view(), name="LogisticRegressionText")
 ]

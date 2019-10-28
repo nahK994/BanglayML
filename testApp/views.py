@@ -38,3 +38,6 @@ class DQN_TrainingText(TemplateView):
 
 class LinearRegressionText(TemplateView):
     template_name = "LinearRegressionText.html"
+
+class LogisticRegressionText(TemplateView):
+    template_name = "LogisticRegressionText.html"
