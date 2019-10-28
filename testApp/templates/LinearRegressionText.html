@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+
+{% block body %}
+{% load static %}
+<title>Linear Regression-এ হাতেখড়ি-BanglayML</title>
+
+<div class="row">
+    <div class="col s10 push-s1">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title center-align deep-orange-text text-darken-2">Linear Regression-এ হাতেখড়ি</span>
+                <ul class="collapsible expandable">
+                    <li class="active">
+                        <div class="collapsible-header blue lighten-5" style="font-size: 20px;">Blog</div>
+                            <div class="collapsible-body">
+                                <p class="center-left">
+                                    Linear regression analysis জানার আগে আমাদের এটা জানা দরকার যে, Regression analysis কি?<br><br>
+Regression analysis হল কতগুলো স্বাধীন আর অধীন চলকের ভেতর আনুমানিক/কাছাকাছি একটা সম্পর্ক খুঁজে বের করার একটি টেকনিক। এটা এক ধরনের মডেলিং টেকনিক যার সাহায্যে কতগুলো স্বাধীন ও অধীন চলকের ভেতর সবচেয়ে নিকটবর্তী একটা relationship খুঁজে বের করা হয়।<br><br>
+আসলে Linear Regression হল একটি পদ্ধতি যার সাহায্যে কয়েকটি ডাটাপয়েন্টের ভেতর দিয়ে এমন একটি সরলরেখা টানা হয় যা থেকে ঐ ডাটাপয়েন্টগুলোর দূরত্ব সর্বনিম্ন হয়। Linear Regression করা হয় দুইটি উপায়ে।<br>
+সরল বীজগাণিতিক উপায়ে<br>
+Gradient Descent এর সাহায্যে<br><br>
+নিচে X ও Y মান সম্বলিত একটি টেবিল দেওয়া হলঃ
+<table class="centered striped">
+    <thead>
+      <tr>
+          <th>X</th>
+          <th>Y</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>3</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>5</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>6</td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>2</td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td>3</td>
+      </tr>
+    </tbody>
+  </table>
+  ধরি, Linear Regression এর সাহায্যে পাওয়া সরলরেখাটি পাব সেটি- y=mx+c. একে হাইপোথিসিসও বলা হয়। এই হাইপোথিসিসকে ভালোভাবে জানতে হলে আমাদেরকে m ও c এর মান জানতে হবে। আমরা প্রথমে সরল বীজগাণিতিক উপায়ে তারপর Gradient Descent এর সাহায্যে m ও c এর মান করব।<br><br>
+বীজগাণিতিক উপায়ে m ও c এর সূত্র দুটি হলঃ <br>
+<img class="materialboxed" style="margin: auto;" width="250" src="{% static "linearRegression1.jpg" %}"><br>
+এখানে-
+<table class="centered striped">
+    <thead>
+      <tr>
+          <th>X</th>
+          <th>Y</th>
+          <th>XY</th>
+          <th>X*X</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>3</td>
+        <td>3</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>5</td>
+        <td>10</td>
+        <td>4</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>6</td>
+        <td>30</td>
+        <td>25</td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>2</td>
+        <td>14</td>
+        <td>49</td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td>3</td>
+        <td>27</td>
+        <td>81</td>
+      </tr>
+      <tr>
+        <td>Total = 24</td>
+        <td>Total = 19</td>
+        <td>Total = 84</td>
+        <td>Total = 160</td>
+      </tr>
+    </tbody>
+</table><br>
+m = (5x84-24x19) / (5x160-24x24) = -0.1607<br>
+c=(19x160-24x84) / (5x160-24x24) = 4.57<br>
+সুতরাং, y=-0.1607x+4.57. হাইপোথিসিসকে <img align="middle" width="45" style="margin-top: -10px;" src="{% static "linearRegression2.jpg" %}"> ফাংশনের সাহায্যে প্রকাশ করা হয়।
+<img align="middle" width="45" style="margin-top: -10px;" src="{% static "linearRegression2.jpg" %}">= -0.1607x + 4.57. h এর নিচে সাফিক্স আকারে w দিয়ে বোঝানো হয় যে, নির্দিষ্ট weight vector এর জন্য হাইপোথিসিস 
+<img align="middle" width="45" style="margin-top: -10px;" src="{% static "linearRegression2.jpg" %}">.
+এবার আমরা দেখব কিভাবে Gradient Descent এর সাহায্যে m ও c এর মান বের করতে হয়।<br>
+এক্ষেত্রে আমরা প্রথমে m ও c এর random মান ধরে নিব। ধরে নিলাম, m=2 আর c=4 । সুতরাং, <img align="middle" width="45" style="margin-top: -10px;" src="{% static "linearRegression2.jpg" %}"> = 2x+4. টেবিলে দেওয়া প্রথম ডাটা- (1, 3). এখন, h(1)=6. সতরাং, এখানে গড়মিল বা cost দেখা যাচ্ছে (6-3)=3. <br><br>
+এবারে আমরা m ও c এর মান এমনভাবে আপডেট করব যেন গড়মিল/cost কমে আসে। এভাবে বারবার আপডেট করতে করতে cost ধীরে ধীরে শূন্যের দিকে নিয়ে যাওয়াই আমাদের মূল উদ্দেশ্য। এটাই Gradient Descent. <br><br>
+আশা করি, এখন আপনাদের মনে এখন কয়েকটি প্রশ্ন এসেছে।<br>
+• exactly কিভাবে cost calculate করব? <br>
+• cost calculate করার পর m ও c এর মান কিভাবে আপডেট করব?<br>
+• Gradient বলতে তো আসলে ঢাল বোঝায়। তো এই ঢালটা আসলে কার?<br>
+• আমাদের হাইপোথিসিস কি সবসময় দুই চলকবিশিষ্টই হবে? <br>
+চিন্তার কিছু নেই। আস্তে আস্তে সবকিছু ক্লিয়ার করা হবে।<br><br>    
+তো শেষের ডাউটাই প্রথমে ক্লিয়ার করি বরং।
+আমাদের হাইপোথিসিস equation-
+<img class="materialboxed" style="margin: auto;" width="180" src="{% static "linearRegression3.jpg" %}"><br>
+আমাদের cost function টি নিম্নরূপঃ<br>
+<img class="materialboxed" style="margin: auto;" width="220" src="{% static "linearRegression4.jpg" %}"><br>
+হাইপোথিসিসের cost চলকের সাথে সম্বলিত ধ্রুবকের বা weight-এর উপর নির্ভরশীল। তাই cost function এর parameter হাইপোথিসিসের weight। এখানে <img align="middle" width="25" style="margin-top: -5px;" src="{% static "linearRegression5.jpg" %}"> = c আর <img align="middle" width="20" style="margin-top: -8px;" src="{% static "linearRegression12.png" %}">= m।<br><br>
+এখানে, <img align="middle" width="45" style="margin-top: -10px;" src="{% static "linearRegression2.jpg" %}"> দিয়ে হাইপথিসিস থেকে পাওয়া আউটপুট বোঝানো হয়েছে। <img align="middle" width="15" style="margin-top: -10px;" src="{% static "linearRegression13.png" %}"> দিয়ে ডাটার লেভেল বা প্রকৃত আউটপুট বোঝানো হয়েছে।
+কিন্তু সবসময় হাইপোথিসিসের চলকের সংখ্যা দুইটি হবে এমন কথা নেই। n-সংখ্যক চলক বিশিষ্ট হাইপোথিসিসের সমীকরণ-
+<img class="materialboxed" style="margin: auto;" width="280" src="{% static "linearRegression6.jpg" %}"><br>
+আর সেক্ষেত্রে cost function হবে- 
+<img class="materialboxed" style="margin: auto;" width="380" src="{% static "linearRegression7.jpg" %}"><br>
+এখন, <img align="middle" width="45" style="margin-top: -10px;" src="{% static "linearRegression2.jpg" %}">-y দিয়েও cost মাপা যেত তবে এক্ষেত্রে <img align="middle" width="45" style="margin-top: -10px;" src="{% static "linearRegression2.jpg" %}"> এর মান যত -∞ এর দিকে যেত, <img align="middle" width="45" style="margin-top: -10px;" src="{% static "linearRegression2.jpg" %}">-y তত ঋণাত্নক হত। আবার যত ∞ এর দিকে যেত তত ধনাত্নক হত। অবশেষে, total cost বের করার সময় সবগুলো যোগ করে শূন্য(০) হয়ে যেত বা শূন্যের কাছাকাছি চলে যেত। ধরুন, কোন ডাটার জন্য cost=-5 আবার অন্যকোন ডাটার জন্য cost=4. Total cost = (4 + (-5)) = -1. যেটা অবশ্যই unexpected. এজন্যই শুধু <img align="middle" width="45" style="margin-top: -10px;" src="{% static "linearRegression2.jpg" %}">-y এর পরিবর্তে এর বর্গ ব্যবহার করা হয়। (1/m) গুণ করা হয় cost এর গড়মান নেওয়ার জন্য আর (1/2) গুণ করা হয়েছে calculation-এর সুবিধার যেটা সম্পর্কে আমরা সামনে জানতে পারব।<br><br>
+এখন আমরা হাইপোথিসিসের weight-এর মানগুলো optimize করে cost function-এর মিনিমাম ভ্যালু বের করব। সেজন্য আমরা প্রথমে যেকোন weight, <img align="middle" width="25" style="margin-top: -5px;" src="{% static "linearRegression5.jpg" %}"> বাদে বাকি weight গুলোকে স্থির বলে ধরে নিব। তারপর ঐ <img align="middle" width="25" style="margin-top: -5px;" src="{% static "linearRegression5.jpg" %}"> কে বারবার iteration এর মাধ্যমে আপডেট করব আর cost বের করে দেখব cost কমছে কিনা। cost কমে যাওয়ার পরিমাণ নির্দিষ্ট একটা মানের নিচে চলে গেলে <img align="middle" width="25" style="margin-top: -5px;" src="{% static "linearRegression5.jpg" %}"> এর জন্য iteration থামিয়ে পরবর্তী weight এর জন্য অগ্রসর হব।
+নিচের গ্রাফটি দেখলে জিনিসটা ক্লিয়ার হয়ে যাবে।
+উপরে <img align="middle" width="25" style="margin-top: -5px;" src="{% static "linearRegression5.jpg" %}"> বনাম cost একটি গ্রাফ দেখা যাচ্ছে। অন্যান্য weight গুলো constant সেজন্য এদের বিবেচনায় নেওয়ার দরকার নেই।<br>
+ধরি, <img align="middle" width="70" style="margin-top: -10px;" src="{% static "linearRegression8.jpg" %}">. এখন দেখতে পারছি যে, local minima তে পৌছাতে হলে <img align="middle" width="25" style="margin-top: -5px;" src="{% static "linearRegression5.jpg" %}"> কে একটু একটু করে কমাতে হবে। কমাতে কমাতেই আমরা local minima তে পৌছে যাব। এখন প্রশ্ন হচ্ছে কমাব কত করে? কমাব <img align="middle" width="120" style="margin-top: 0px;" src="{% static "linearRegression9.jpg" %}"> করে।<br><br>
+এখানে,<br>
+<img align="middle" width="130" style="margin-top: -5px;" src="{% static "linearRegression10.jpg" %}">  = cost function এর gradient. এটাই সেই gradient যেটা কমিয়ে আনার ভেতর দিয়ে হাইপোথিসিসের weight গুলোকে আপডেট করা হয়।<br>
+α = learning rate; এটা একটি ধ্রুবক। এটি ছোট হলে global minima তে পৌছাতে অনেক সময় নিবে। আবার বেশী বড় হলে দেখা যাবে খুব তাড়াতাড়ি global minima এর কাছে চলে আসবে আবার হুট করে global minima এর থেকে দূরে চলে যাবে। <br><br>
+সুতরাং, প্রতি iteration- এ w_0 এর আপডেট হবার সূত্র-
+<img class="materialboxed" style="margin: auto;" width="300" src="{% static "linearRegression11.jpg" %}"><br>
+এখানে ডানপাশের <img align="middle" width="25" style="margin-top: -5px;" src="{% static "linearRegression5.jpg" %}"> পুরনো আর বামপাশের <img align="middle" width="25" style="margin-top: -5px;" src="{% static "linearRegression5.jpg" %}"> আপডেটেড। <img align="middle" width="25" style="margin-top: -5px;" src="{% static "linearRegression5.jpg" %}">, A বা B পয়েন্ট থেকে শুরু হলে α ঋণাত্নক আর C পয়েন্ট থেকে হলে ধনাত্নক। এখন সমস্যা হল, যদি আমি C পয়েন্ট থেকে শুরু করি তাহলেই কেবলমাত্র global minima তে পৌছাতে পারব।
+কিন্তু যদি A বা B থেকে শুরু করি তাহলে পারব না কারণ, আমরা global minima তে পৌছানোর আগেই local minima তে পৌছে যাব। আর local minima তে পৌছানোর পর iteration বন্ধ হয়ে যাবে। এই সমস্যাকে বলা হয় stuck in local minima.<br><br>
+এক্ষেত্রে যেটা করা যায় সেটা হল, বেশ কয়েকবার <img align="middle" width="25" style="margin-top: -5px;" src="{% static "linearRegression5.jpg" %}"> এর random মান ধরে নিয়ে gradient descent এর সাহায্যে local minima বের করে তাদের ভেতর সবচেয়ে ছোট মানকে global minima বলে ধরে নেওয়া যায়।<br><br>
+আজকে আমরা জানলাম linear regression কি? কিভাবে একটি linear regression মডেল ট্রেইন করতে হয়? আগামী পর্বে আমরা সম্পর্কিত কিছু সমস্যা যেমন ওভারফিটিং, আন্ডারফিটিং এবং রেগুলারাইজেশনের সাহায্যে এদের কিভাবে কমিয়ে আনা যায় তা দেখব।<br><br>
+আজকের মত এ পর্যন্তই।
+</p>
+                            </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header blue lighten-5" style="font-size: 20px;">আপনার মতামত জানান.....</div>
+                        <div class="collapsible-body">
+                            <div class="fb-like" data-href="http://127.0.0.1:8000/LinearRegressionText/" data-width="" data-layout="standard" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div><br><br>
+                            <div class="fb-comments" data-href="http://127.0.0.1:8000/LinearRegressionText/" data-width="550" data-numposts="5"></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
