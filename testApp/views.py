@@ -41,3 +41,6 @@ class LinearRegressionText(TemplateView):
 
 class LogisticRegressionText(TemplateView):
     template_name = "LogisticRegressionText.html"
+
+class knnText(TemplateView):
+    template_name = "knnText.html"

@@ -1,0 +1,255 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+<title>K-Nearest Neighbors-BanglayML</title>
+
+<div class="row">
+        <div class="col s10 push-s1">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title center-align deep-orange-text text-darken-2">K-Nearest Neighbors</span>
+                    <ul class="collapsible expandable">
+                        <li class="active">
+                            <div class="collapsible-header blue lighten-5" style="font-size: 20px;">Blog</div>
+                                <div class="collapsible-body">
+                                    <p class="center-left">
+                                        আজ মেশিন লার্নিং-এর সবচেয়ে কিউটেস্ট algorithm(আমার মতে) K-Nearest Neighbors(KNN) নিয়ে আলোচনা করব।<br>
+                                        KNN মূলত “সঙ্গ দোষে লোহা ভাসে”- এই নীতির উপর ভিত্তি করে চলে। মানে ধরুন, আমি জানতে চাই আপনি ডিসি কমিক ফ্যান নাকি মারভেল কমিক ফ্যান। সেটা আমি সরাসরি আপনার কাছ থেকে না জেনে, খোঁজ নিব যে আপনার বন্ধুদের ভেতর বেশীরভাগ কোন কমিকের ফ্যান। আপনার বন্ধুদের ভেতর যে কমিকের ফ্যান বেশী সে ধরে নিব আপনিও সেই কমিকের ফ্যান। যেহেতু আপনি আপনার কাছের বন্ধুদের দ্বারাই বেশী ইনফ্লুয়েন্সড হবেন, তাই আপনার সব বন্ধুকে হিসেবে নেওয়ার দরকার নেই। তাই আমরা আপনার সবচেয়ে ভালো K সংখ্যক বন্ধুর ডাটা নিয়ে প্রসেস করব।<br><br>
+                                        ধরে নিলাম, আপনি আর আপনার কিছু বন্ধু একই মেসে থাকেন। আপনার সিটের লোকেশন (0, 0) পয়েন্টে। যাদের সিট আপনার সিটের যত কাছে তারা আপনার তত ভালো বন্ধু। মেসে থাকে আরও 7 জন। তাদের সিটের লোকেশন ও আর পছন্দের কমিকের টেবিল নিচে দেওয়া হলঃ
+                                        <div class="row">
+                                            <div class="col s4 m6">  
+                                            <table class="striped highlight centered" style="margin-left: 270px;">
+                                                <thead>
+                                                  <tr>
+                                                    <th>X</th>
+                                                    <th>Y</th>
+                                                    <th>কমিক ফ্যান</th>
+                                                  </tr>
+                                                </thead>
+                                        
+                                                <tbody>
+                                                  <tr>
+                                                    <td>3</td>
+                                                    <td>2</td>
+                                                    <td>মারভেল</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>2</td>
+                                                    <td>2</td>
+                                                    <td>ডিসি</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>-2</td>
+                                                    <td>4</td>
+                                                    <td>ডিসি</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>1</td>
+                                                    <td>7</td>
+                                                    <td>মারভেল</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>5</td>
+                                                    <td>9</td>
+                                                    <td>মারভেল</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>-4</td>
+                                                    <td>-6</td>
+                                                    <td>ডিসি</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>0</td>
+                                                    <td>-4</td>
+                                                    <td>ডিসি</td>
+                                                  </tr>
+                                                </tbody>
+                                            </table>
+                                            </div>
+                                        </div>
+                                        প্লট পুরো ready. এবার কি করব ধাপগুলো আগে একবার বলে নেই। তারপর হাতেকলমে করে দেখাব-<br>
+                                        • প্রতিটি ডাটাপয়েন্ট থেকে আপনার সিটের দূরত্ব বের করব।<br>
+                                        • দূরত্বের মান অনুযায়ী ছোট থেকে বড় আকারে আকারে ডাটা পয়েন্টগুলো সাজাব।<br>
+                                        • সাজানো ডাটা পয়েন্টগুলোর ভেতর থেকে প্রথম K সংখ্যক ডাটা পয়েন্ট আলাদা করব।<br>
+                                        • অই K সংখ্যক ডাটা পয়েন্টের ভেতর যে কমিকের ফ্যান বেশী ধরে নিব সেই আপনিও সেই কমিক ফ্যান।<br>
+                                        নিচের টেবিলে আপনার সিটের লোকেশন থেকে প্রত্যেকের সিটের দূরত্বও দেখানো হল।<br>
+                                        <div class="row">
+                                          <div class="col s4 m6">  
+                                          <table class="striped highlight centered" style="margin-left: 270px;">
+                                              <thead>
+                                                <tr>
+                                                  <th>X</th>
+                                                  <th>Y</th>
+                                                  <th>কমিক ফ্যান</th>
+                                                  <th>Distance</th>
+                                                </tr>
+                                              </thead>
+                                      
+                                              <tbody>
+                                                <tr>
+                                                  <td>3</td>
+                                                  <td>2</td>
+                                                  <td>মারভেল</td>
+                                                  <td>3.606</td>
+                                                </tr>
+                                                <tr>
+                                                  <td>2</td>
+                                                  <td>2</td>
+                                                  <td>ডিসি</td>
+                                                  <td>2.828</td>
+                                                </tr>
+                                                <tr>
+                                                  <td>-2</td>
+                                                  <td>4</td>
+                                                  <td>ডিসি</td>
+                                                  <td>4.472</td>
+                                                </tr>
+                                                <tr>
+                                                  <td>1</td>
+                                                  <td>7</td>
+                                                  <td>মারভেল</td>
+                                                  <td>7.071</td>
+                                                </tr>
+                                                <tr>
+                                                  <td>5</td>
+                                                  <td>9</td>
+                                                  <td>মারভেল</td>
+                                                  <td>10.296</td>
+                                                </tr>
+                                                <tr>
+                                                  <td>-4</td>
+                                                  <td>-6</td>
+                                                  <td>ডিসি</td>
+                                                  <td>7.211</td>
+                                                </tr>
+                                                <tr>
+                                                  <td>0</td>
+                                                  <td>-4</td>
+                                                  <td>ডিসি</td>
+                                                  <td>4</td>
+                                                </tr>
+                                              </tbody>
+                                          </table>
+                                          </div>
+                                      </div>
+                                      এবার দূরত্ব অনুযায়ী ডাটা পয়েন্টগুলো সর্ট করে পাই-
+                                      <div class="row">
+                                        <div class="col s4 m6">  
+                                        <table class="striped highlight centered" style="margin-left: 270px;">
+                                            <thead>
+                                              <tr>
+                                                <th>X</th>
+                                                <th>Y</th>
+                                                <th>কমিক ফ্যান</th>
+                                                <th>Distance</th>
+                                              </tr>
+                                            </thead>
+                                    
+                                            <tbody>
+                                              <tr>
+                                                <td>2</td>
+                                                <td>2</td>
+                                                <td>ডিসি</td>
+                                                <td>2.828</td>
+                                              </tr>
+                                              <tr>
+                                                <td>3</td>
+                                                <td>2</td>
+                                                <td>মারভেল</td>
+                                                <td>3.606</td>
+                                              </tr>
+                                              <tr>
+                                                <td>0</td>
+                                                <td>-4</td>
+                                                <td>ডিসি</td>
+                                                <td>4</td>
+                                              </tr>
+                                              <tr>
+                                                <td>-2</td>
+                                                <td>4</td>
+                                                <td>ডিসি</td>
+                                                <td>4.472</td>
+                                              </tr>
+                                              <tr>
+                                                <td>1</td>
+                                                <td>7</td>
+                                                <td>মারভেল</td>
+                                                <td>7.071</td>
+                                              </tr>
+                                              <tr>
+                                                <td>-4</td>
+                                                <td>-6</td>
+                                                <td>ডিসি</td>
+                                                <td>7.211</td>
+                                              </tr>
+                                              <tr>
+                                                <td>5</td>
+                                                <td>9</td>
+                                                <td>মারভেল</td>
+                                                <td>10.296</td>
+                                              </tr>
+                                            </tbody>
+                                        </table>
+                                        </div>
+                                    </div>
+                                    এবার আমরা K এর মান ধরে নিব। আপাতত আমরা ধরে নিলাম K=5.<br>
+                                    <div class="row">
+                                      <div class="col s4 m6">  
+                                      <table class="striped highlight centered" style="margin-left: 270px;">
+                                          <thead>
+                                            <tr>
+                                              <th>X</th>
+                                              <th>Y</th>
+                                              <th>কমিক ফ্যান</th>
+                                            </tr>
+                                          </thead>
+                                  
+                                          <tbody>
+                                            <tr>
+                                              <td>2</td>
+                                              <td>2</td>
+                                              <td>ডিসি</td>
+                                            </tr>
+                                            <tr>
+                                              <td>3</td>
+                                              <td>2</td>
+                                              <td>মারভেল</td>
+                                            </tr>
+                                            <tr>
+                                              <td>0</td>
+                                              <td>-4</td>
+                                              <td>ডিসি</td>
+                                            </tr>
+                                            <tr>
+                                              <td>-2</td>
+                                              <td>4</td>
+                                              <td>ডিসি</td>
+                                            </tr>
+                                            <tr>
+                                              <td>1</td>
+                                              <td>7</td>
+                                              <td>মারভেল</td>
+                                            </tr>
+                                          </tbody>
+                                      </table>
+                                      </div>
+                                  </div>
+                                  দেখা যাচ্ছে যে, প্রথম 5 জন বন্ধুর ভেতর 3 জন ডিসি কমিক ফ্যান আর 2 জন মারভেল কমিক ফ্যান। সুতরাং, ডিসি কমিক ফ্যানের সংখ্যাই বেশী। তারমানে KNN ক্লাসিফাইয়ার অনুযায়ী আপনি একজন ডিসি কমিক ফ্যান।<br>
+                                  আমি এখানে K-এর মান 5 ধরে নিয়েছি। কিন্তু রিয়েল লাইফে K-এর optimal value যে কত হবে সেটা বের করাটা আসলেই কঠিন। quara তে একটা পোষ্টের কমেন্ট সেকশনে আমি এটা পেয়েছি <a href="https://qr.ae/TWoTeB">https://qr.ae/TWoTeB</a>.<br>
+                                  তো আজকের মত এ পর্যন্তই।                          
+                                    </p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="collapsible-header blue lighten-5" style="font-size: 20px;">আপনার মতামত জানান.....</div>
+                            <div class="collapsible-body">
+                                <div class="fb-like" data-href="http://127.0.0.1:8000/knnText/" data-width="" data-layout="standard" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div><br><br>
+                                <div class="fb-comments" data-href="http://127.0.0.1:8000/knnText/" data-width="550" data-numposts="5"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
