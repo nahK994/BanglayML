@@ -1,45 +1,45 @@
 {% extends 'base.html' %}
 {% block body %}
 {% load static %}
-<title>Dimendion Reduction-BanglayML</title>
+<title>DQN কিভাবে ট্রেইন হয়-BanglayML</title>
+
 <div class="row">
-    <div class="col s10 push-s1">
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title center-align deep-orange-text text-darken-2">DQN কিভাবে ট্রেইন হয়</span>
-                
-                <ul class="collapsible expandable">
-                    <li class="active">
-                        <div class="collapsible-header blue lighten-5" style="font-size: 20px;">Blog</div>
-                            <div class="collapsible-body">
-                                <p class="center-left">
-                                    DQN- ট্রেইন করতে ট্রেইনিং ডাটা দরকার। এই ট্রেইনিং ডাটা আসে agent এর এক্সপেরিয়েন্স থেকে। agent কে প্রথমে environment এ ছেড়ে দেওয়া হয় এক্সপেরিয়েন্স নেওয়ার জন্য। সে exploration আর exploitation এর মাধ্যমে এক্সপেরিয়েন্স নিতে থাকে। 
-                                    তারপর ঐ এক্সপেরিয়েন্সগুলো কাজে লাগিয়ে DQN- ট্রেইন করা হয়। t টাইমে agent এর অর্জিত এক্সপেরিয়েন্স <img align="middle" width="170" src="{% static "dqnTrain1.jpg" %}">. 
-                                    এভাবে প্রতি টাইম স্টেপে experience নেওয়াকে বলে <span class="deep-orange-text text-darken-2">memory replay</span>.<br>
-                                    এভাবে agent কে দিয়ে experience gather করে DQN ট্রেইন করাকে <span class="deep-orange-text text-darken-2">experience replay</span> বলে।<br><br>
-                                    Agent এর এক্সপেরিয়েন্স নেওয়া বলতে D সংখ্যক random এক্সপেরিয়েন্স নেওয়া হবে। যদি random এক্সপেরিয়েন্স না নিয়ে sequential experience নেওয়া হয় তাহলে ডাটাপয়েন্টগুলো অনেক correlated হয়ে যাবে। এই correlated ডাটা পয়েন্টগুলো দিয়ে মডেলকে ট্রেইন করা হলে মডেল নতুন ডাটা পয়েন্ট পেলে ঠিকমত প্রিডিকশন করতে পারবে না।<br><br>
-                                    এবার আমরা মডেলকে ট্রেইন করব।<br>
-                                    Q value বের করার জন্য মডেলকে ট্রেইন করার আগে আমরা প্রথমে মডেলের edge এর weight গুলোকে random value দিয়ে initialize করব। তারপর ট্রেইনিং ডাটা পয়েন্টগুলো মডেলে ইনপুট করে, এর আউটপুট দিয়ে লস বের করব। <br> 
-                                    <img class="materialboxed" style="margin: auto;" src="{% static "dqnTrain2.jpg" %}"><br>
-                                    এখন সমস্যা হল, <img align="middle" width="120" src="{% static "dqnTrain3.jpg" %}"> এই টার্মটা নিয়ে। এটা কিভাবে বের করব, তাই না?<br><br>
-                                    আসলে এটা বের করার ডিরেক্ট কোন উপায় নেই। এটা বের করার জন্য আরেকটি টার্গেট নিউরাল নেটওয়ার্ক থাকে। এই টার্গেট নিউরাল নেটওয়ার্কটি, q value বের করার নিউরাল নেটওয়ার্কের weight-গুলো দিয়েই initialize করা থাকে।<br>
-এখানে একটা ব্যাপার আছে, যেখানে q value বের করার জন্য ব্যবহৃত নিউরাল নেটওয়ার্ক যেখান প্রতি টাইম স্টেপে আপডেট হতে থাকে সেখানে আমাদের দ্বিতীয় মানে টার্গেট নিউরাল নেটওয়ার্ক t টাইম স্টেপ পর আপডেট হতে থাকে।<br><br>
-টার্গেট নিউরাল নেটওয়ার্কের weight, q value বের করার নিউরাল নেটওয়ার্কের weight এর সাথে সাথে আপডেট করলে দেখা যাবে দুই নিউরাল নেটওয়ার্কের value ই একইসাথে change হবে। সুতরাং, loss এর মান ঘুরেফিরে প্রায় একই থাকবে।<br><br>
-DQN ট্রেইন করার জন্য labeled data পাওয়াটা খুবই মুশকিল। তাই শুরুতে unreliable নিউরাল নেটওয়ার্কের উপর নির্ভর করতে হলেও এই unreliability γ-এর মান দ্বারা নিয়ন্ত্রণ করা যায়। পূর্বের পর্বেই জানানো হয়েছে যে, γ এর মান ০ থেকে ১ এর ভেতর থাকে। তারমানে <img align="middle" width="120" src="{% static "dqnTrain3.jpg" %}"> টার্গেট ভ্যালু প্রভাবিত করে, তবে কম।<br><br>
-এভাবেই একটি DQN ট্রেইন হয়।
-                                </p>
+        <div class="col s10 push-s1">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title center-align deep-orange-text text-darken-2">DQN কিভাবে ট্রেইন হয়</span>
+                    <ul class="collapsible expandable">
+                        <li class="active">
+                            <div class="collapsible-header blue lighten-5" style="font-size: 20px;">Blog</div>
+                                <div class="collapsible-body">
+                                    <p class="center-left">
+                                            DQN- ট্রেইন করতে ট্রেইনিং ডাটা দরকার। এই ট্রেইনিং ডাটা আসে agent এর এক্সপেরিয়েন্স থেকে। agent কে প্রথমে environment এ ছেড়ে দেওয়া হয় এক্সপেরিয়েন্স নেওয়ার জন্য। সে exploration আর exploitation এর মাধ্যমে এক্সপেরিয়েন্স নিতে থাকে। 
+                                            তারপর ঐ এক্সপেরিয়েন্সগুলো কাজে লাগিয়ে DQN- ট্রেইন করা হয়। t টাইমে agent এর অর্জিত এক্সপেরিয়েন্স <img align="middle" width="170" src="{% static "dqnTrain1.jpg" %}">. 
+                                            এভাবে প্রতি টাইম স্টেপে experience নেওয়াকে বলে <span class="deep-orange-text text-darken-2">memory replay</span>.<br>
+                                            এভাবে agent কে দিয়ে experience gather করে DQN ট্রেইন করাকে <span class="deep-orange-text text-darken-2">experience replay</span> বলে।<br><br>
+                                            Agent এর এক্সপেরিয়েন্স নেওয়া বলতে D সংখ্যক random এক্সপেরিয়েন্স নেওয়া হবে। যদি random এক্সপেরিয়েন্স না নিয়ে sequential experience নেওয়া হয় তাহলে ডাটাপয়েন্টগুলো অনেক correlated হয়ে যাবে। এই correlated ডাটা পয়েন্টগুলো দিয়ে মডেলকে ট্রেইন করা হলে মডেল নতুন ডাটা পয়েন্ট পেলে ঠিকমত প্রিডিকশন করতে পারবে না।<br><br>
+                                            এবার আমরা মডেলকে ট্রেইন করব।<br>
+                                            Q value বের করার জন্য মডেলকে ট্রেইন করার আগে আমরা প্রথমে মডেলের edge এর weight গুলোকে random value দিয়ে initialize করব। তারপর ট্রেইনিং ডাটা পয়েন্টগুলো মডেলে ইনপুট করে, এর আউটপুট দিয়ে লস বের করব। <br> 
+                                            <img class="materialboxed" style="margin: auto;" src="{% static "dqnTrain2.jpg" %}"><br>
+                                            এখন সমস্যা হল, <img align="middle" width="120" src="{% static "dqnTrain3.jpg" %}"> এই টার্মটা নিয়ে। এটা কিভাবে বের করব, তাই না?<br><br>
+                                            আসলে এটা বের করার ডিরেক্ট কোন উপায় নেই। এটা বের করার জন্য আরেকটি টার্গেট নিউরাল নেটওয়ার্ক থাকে। এই টার্গেট নিউরাল নেটওয়ার্কটি, q value বের করার নিউরাল নেটওয়ার্কের weight-গুলো দিয়েই initialize করা থাকে।<br>
+        এখানে একটা ব্যাপার আছে, যেখানে q value বের করার জন্য ব্যবহৃত নিউরাল নেটওয়ার্ক যেখান প্রতি টাইম স্টেপে আপডেট হতে থাকে সেখানে আমাদের দ্বিতীয় মানে টার্গেট নিউরাল নেটওয়ার্ক t টাইম স্টেপ পর আপডেট হতে থাকে।<br><br>
+        টার্গেট নিউরাল নেটওয়ার্কের weight, q value বের করার নিউরাল নেটওয়ার্কের weight এর সাথে সাথে আপডেট করলে দেখা যাবে দুই নিউরাল নেটওয়ার্কের value ই একইসাথে change হবে। সুতরাং, loss এর মান ঘুরেফিরে প্রায় একই থাকবে।<br><br>
+        DQN ট্রেইন করার জন্য labeled data পাওয়াটা খুবই মুশকিল। তাই শুরুতে unreliable নিউরাল নেটওয়ার্কের উপর নির্ভর করতে হলেও এই unreliability γ-এর মান দ্বারা নিয়ন্ত্রণ করা যায়। পূর্বের পর্বেই জানানো হয়েছে যে, γ এর মান ০ থেকে ১ এর ভেতর থাকে। তারমানে <img align="middle" width="120" src="{% static "dqnTrain3.jpg" %}"> টার্গেট ভ্যালু প্রভাবিত করে, তবে কম।<br><br>
+        এভাবেই একটি DQN ট্রেইন হয়।
+                                    </p>
                             </div>
-                    </li>
-                    <li>
-                        <div class="collapsible-header blue lighten-5" style="font-size: 20px;">আপনার মতামত জানান.....</div>
-                        <div class="collapsible-body">
-                            <div class="fb-like" data-href="http://banglayml.herokuapp.com/DQN_TrainingText/" data-width="" data-layout="standard" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div><br><br>
-                            <div class="fb-comments" data-href="http://banglayml.herokuapp.com/DQN_TrainingText/" data-width="550" data-numposts="5"></div>
-                        </div>
-                    </li>
-                </ul>
+                        </li>
+                        <li>
+                            <div class="collapsible-header blue lighten-5" style="font-size: 20px;">আপনার মতামত জানান.....</div>
+                            <div class="collapsible-body">
+                                <div class="fb-like" data-href="http://banglayml.herokuapp.com/DQN_TrainingText/" data-width="" data-layout="standard" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div><br><br>
+                                <div class="fb-comments" data-href="http://banglayml.herokuapp.com/DQN_TrainingText/" data-width="550" data-numposts="5"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}
