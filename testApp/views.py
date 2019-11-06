@@ -1,16 +1,45 @@
-from django.views.generic import TemplateView
+from django.views import generic
+from . models import cardTable
 
-class HomeView(TemplateView):
-    template_name = "index.html"
+class HomeView(generic.ListView):
+    template_name = 'index.html'
+    model = cardTable
 
-class SL_View(TemplateView):
-    template_name = "SL_View.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Introduction - BanglayML'
+        context['querySet'] = super().get_queryset().filter(categoryID = 'Intro')
+        return context
 
-class UL_View(TemplateView):
-    template_name = "UL_View.html"
+class SL_View(generic.ListView):
+    template_name = 'SL_View.html'
+    model = cardTable
 
-class RL_View(TemplateView):
-    template_name = "RL_View.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Supervised Learning - BanglayML'
+        context['querySet'] = super().get_queryset().filter(categoryID = 'SL')
+        return context
 
-class IntroText(TemplateView):
-    template_name = "IntroText.html"
+class UL_View(generic.ListView):
+    template_name = 'UL_View.html'
+    model = cardTable
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Unsupervised Learning - BanglayML'
+        context['querySet'] = super().get_queryset().filter(categoryID = 'UL')
+        return context
+
+class RL_View(generic.ListView):
+    template_name = 'RL_View.html'
+    model = cardTable
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Reinforcement Learning - BanglayML'
+        context['querySet'] = super().get_queryset().filter(categoryID = 'RL')
+        return context
+
+class Text(generic.TemplateView):
+    template_name = 'Text.html'
