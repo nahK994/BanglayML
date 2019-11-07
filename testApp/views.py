@@ -1,44 +1,22 @@
 from django.views import generic
 from . models import cardTableNew
 
-class HomeView(generic.ListView):
+class View(generic.ListView):
     template_name = 'index.html'
     model = cardTableNew
+    viewType = ''
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Introduction - BanglayML'
-        context['querySet'] = super().get_queryset().filter(categoryID = 'Intro').order_by('cardID')
-        return context
-
-class SL_View(generic.ListView):
-    template_name = 'SL_View.html'
-    model = cardTableNew
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Supervised Learning - BanglayML'
-        context['querySet'] = super().get_queryset().filter(categoryID = 'SL').order_by('cardID')
-        return context
-
-class UL_View(generic.ListView):
-    template_name = 'UL_View.html'
-    model = cardTableNew
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Unsupervised Learning - BanglayML'
-        context['querySet'] = super().get_queryset().filter(categoryID = 'UL').order_by('cardID')
-        return context
-
-class RL_View(generic.ListView):
-    template_name = 'RL_View.html'
-    model = cardTableNew
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Reinforcement Learning - BanglayML'
-        context['querySet'] = super().get_queryset().filter(categoryID = 'RL').order_by('cardID')
+        if self.viewType == 'Intro':
+            context['title'] = 'Introduction - BanglayML'
+        elif self.viewType == 'SL':
+            context['title'] = 'Supervised Learning - BanglayML'
+        elif self.viewType == 'UL':
+            context['title'] = 'Unsupervised Learning - BanglayML'
+        elif self.viewType == 'RL':
+            context['title'] = 'Reinforcement Learning - BanglayML'
+        context['querySet'] = super().get_queryset().filter(categoryID = self.viewType).order_by('cardID')
         return context
 
 class Text(generic.ListView):
