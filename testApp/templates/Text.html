@@ -1,27 +1,14 @@
 {% extends 'base.html' %}
 {% block body %}
-
+<title>{{ title }}</title>
 <div class="row">
     <div class="col">
         <div class="card">
             <div class="card-content">
-                <span class="card-title center-align teal-text text-darken-1">This should be center aligned</span>
-                <p class="center-left">
-                Do you enjoy reading stories? In this section, read our entertaining short stories specially written for intermediate (CEFR level B1) or upper intermediate (CEFR level B2) learners.
-                You will improve your reading fluency and comprehension and develop your vocabulary. Each story has interactive exercises to help you understand and use the language.
-                Do you enjoy reading stories? In this sec Do you enjoy reading stories? In this section, read our entertaining short stories specially written for intermediate (CEFR level B1) or upper intermediate (CEFR level B2) learners.
-                You will improve your reading fluency and comprehension and develop your vocabulary. Each story has interactive exercises to help you understand and use the language.
-                Do you enjoy reading stories? In this section, read our entertaining short stories specially written for intermediate (CEFR level B1) or upper intermediate (CEFR level B2) learners.
-                You will improve your reading fluency and comprehension and develop your vocabulary. Each story has interactive exercises to help you understand and use the language.tion, read our entertaining short stories specially written for intermediate (CEFR level B1) or upper intermediate (CEFR level B2) learners.
-                You will improve your reading fluency and comprehension and develop your vocabulary. Each story has interactive exercises to help you understand and use the language.
-                Do you enjoy reading stories? In this section, read our entertaining short stories specially written for intermediate (CEFR level B1) or upper intermediate (CEFR level B2) learners.
-                You will improve your reading fluency and comprehension and develop your vocabulary. Each story has interactive exercises to help you understand and use the language.
-                Do you enjoy reading stories? In this section, read our entertaining short stories specially written for intermediate (CEFR level B1) or upper intermediate (CEFR level B2) learners.
-                You will improve your reading fluency and comprehension and develop your vocabulary. Each story has interactive exercises to help you understand and use the language.
-                </p>
+                <span class="card-title center-align teal-text text-darken-1">{{querySet.title}}</span>
+                <p class="center-left">{{ querySet.text }}</p>
             </div>
         </div>
     </div>
 </div>
-                
 {% endblock %}
