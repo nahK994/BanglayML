@@ -1,9 +1,10 @@
 from django.views import generic
-from . models import card_table_new
+from . models import card_table, image_table
+from django.http import HttpResponse
 
 class View(generic.ListView):
     template_name = 'index.html'
-    model = card_table_new
+    model = card_table
     viewType = ''
 
     def get_context_data(self, **kwargs):
@@ -21,11 +22,17 @@ class View(generic.ListView):
 
 class Text(generic.ListView):
     template_name = 'Text.html'
-    model = card_table_new
+    #model = card_table
+    model = image_table
     cardID_for_txt = 0
     
+    #def get_context_data(self, **kwargs):
+    #    context = super().get_context_data(**kwargs)
+    #    context['title'] = str(card_table.objects.get(cardID = self.cardID_for_txt).title)
+    #    context['text'] = str(card_table.objects.get(cardID = self.cardID_for_txt).text)
+    #    return context
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Text - BanglayML'
-        context['querySet'] = card_table_new.objects.get(cardID = self.cardID_for_txt)
+        context['title'] = str(image_table.objects.get(title = 'first_image').title)
+        context['img'] = image_table.objects.get(title = 'first_image').upload.url
         return context
