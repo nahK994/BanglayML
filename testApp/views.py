@@ -1,9 +1,9 @@
 from django.views import generic
-from . models import cardTableNew
+from . models import card_table_new
 
 class View(generic.ListView):
     template_name = 'index.html'
-    model = cardTableNew
+    model = card_table_new
     viewType = ''
 
     def get_context_data(self, **kwargs):
@@ -16,16 +16,16 @@ class View(generic.ListView):
             context['title'] = 'Unsupervised Learning - BanglayML'
         elif self.viewType == 'RL':
             context['title'] = 'Reinforcement Learning - BanglayML'
-        context['querySet'] = super().get_queryset().filter(categoryID = self.viewType).order_by('cardID')
+        context['querySet'] = super().get_queryset().filter(categoryID = self.viewType).order_by('serialNO')
         return context
 
 class Text(generic.ListView):
     template_name = 'Text.html'
-    model = cardTableNew
+    model = card_table_new
     cardID_for_txt = 0
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Text - BanglayML'
-        context['querySet'] = cardTableNew.objects.get(cardID = self.cardID_for_txt)
+        context['querySet'] = card_table_new.objects.get(cardID = self.cardID_for_txt)
         return context

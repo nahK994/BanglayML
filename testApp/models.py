@@ -7,25 +7,13 @@ class categoryTable(models.Model):
     def __str__(self):
         return self.categoryID
 
-class cardTable(models.Model):
+class card_table_new(models.Model):
     cardID = models.AutoField(primary_key=True)
     categoryID = models.ForeignKey(
         categoryTable,
         on_delete = models.CASCADE
     )
-    title = models.CharField(max_length=30)
-    paragraph = models.CharField(max_length=100)
-    #text = models.CharField(max_length=1000)
-    
-    def __str__(self):
-        return str(self.categoryID) + " -> " + self.title
-
-class cardTableNew(models.Model):
-    cardID = models.AutoField(primary_key=True)
-    categoryID = models.ForeignKey(
-        categoryTable,
-        on_delete = models.CASCADE
-    )
+    serialNO = models.IntegerField(default=0)
     title = models.CharField(max_length=30)
     paragraph = models.CharField(max_length=100)
     text = models.CharField(max_length=1000)
