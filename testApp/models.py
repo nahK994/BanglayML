@@ -26,7 +26,6 @@ class image_table(models.Model):
         card_table,
         on_delete = models.CASCADE
     )
-    serialNO = models.IntegerField(default=0)
     upload = models.ImageField()
 
     def __str__(self):

@@ -30,7 +30,7 @@ class Text(generic.ListView):
         context['title'] = str(card_table.objects.get(cardID = self.cardID_for_txt).title)
         context['text'] = str(card_table.objects.get(cardID = self.cardID_for_txt).text)
 
-        obj = image_table.objects.filter(cardID = self.cardID_for_txt).order_by('serialNO')
+        obj = image_table.objects.filter(cardID = self.cardID_for_txt)
         for i in obj:
             context[i.title] = i.upload.url
         return context
