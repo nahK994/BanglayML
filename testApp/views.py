@@ -22,17 +22,15 @@ class View(generic.ListView):
 
 class Text(generic.ListView):
     template_name = 'Text.html'
-    #model = card_table
-    model = image_table
+    model = card_table
     cardID_for_txt = 0
     
-    #def get_context_data(self, **kwargs):
-    #    context = super().get_context_data(**kwargs)
-    #    context['title'] = str(card_table.objects.get(cardID = self.cardID_for_txt).title)
-    #    context['text'] = str(card_table.objects.get(cardID = self.cardID_for_txt).text)
-    #    return context
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = str(image_table.objects.get(title = 'first_image').title)
-        context['img'] = image_table.objects.get(title = 'first_image').upload.url
+        context['title'] = str(card_table.objects.get(cardID = self.cardID_for_txt).title)
+        context['text'] = str(card_table.objects.get(cardID = self.cardID_for_txt).text)
+
+        obj = image_table.objects.filter(cardID = self.cardID_for_txt).order_by('serialNO')
+        for i in obj:
+            context[i.title] = i.upload.url
         return context

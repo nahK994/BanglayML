@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.postgres.fields import ArrayField
 
 class categoryTable(models.Model):
     categoryID = models.CharField(max_length=30, primary_key=True)
@@ -23,17 +22,12 @@ class card_table(models.Model):
 
 class image_table(models.Model):
     title = models.CharField(max_length=30)
-    upload = models.ImageField()
-
-    def __str__(self):
-        return self.title
-
-class image_list_table(models.Model):
-    title = models.CharField(max_length=30)
-    upload = ArrayField(
-        models.ImageField(),
-        blank=True
+    cardID = models.ForeignKey(
+        card_table,
+        on_delete = models.CASCADE
     )
+    serialNO = models.IntegerField(default=0)
+    upload = models.ImageField()
 
     def __str__(self):
         return self.title
