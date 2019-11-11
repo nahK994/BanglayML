@@ -29,10 +29,10 @@
                                     আবারও উপরের ছবিতে X-Y প্লেনের উপর তিনটি ডাটা পয়েন্ট দেখা যাচ্ছে। ডাটা পয়েন্টের মধ্য দিয়ে লিনিয়ার রিগ্রেশনের মাধ্যমে পাওয়া হাইপোথিসিস রেখা চলে গেছে। এখানে লাল রেখা দিয়ে ডাটা পয়েন্ট থেকে হাইপোথিসিসের error বোঝানো হয়েছে।<br><br>
                                     এবার আমরা জানব PCA কিভাবে কাজ করে। PCA কিভাবে কাজ করে এটা জানার আগে ছোট ছোট কিছু জিনিস আগে জেনে নেওয়া দরকার।<br>
                                     <span class="deep-orange-text text-darken-2">Mean:</span> আমরা সবাই কচিকালেই পড়েছি গড় কি। কতগুলো ডাটা(সংখ্যা) যোগ করে, সেই যোগফলকে ডাটার সংখ্যা দ্বারা ভাগ করলে গড় বের হয়। পরিসংখ্যানের ভাষায় একে গাণিতিক গড় বা Arithmetic Mean বলে।<br>
-                                    <img class="materialboxed" style="margin: auto;" src="{% static "pca3.jpg" %}"><br>
+                                    $$ \overline x = \frac{\sum_{i=1}^n x_i}{n} $$
                                     এর সাহায্যে ডাটা পয়েন্টগুলোর মাঝামাঝি পয়েন্ট খুঁজে বের করা হয়।<br>
                                     <span class="deep-orange-text text-darken-2">Variance:</span> ডাটা পয়েন্টগুলো তাদের গড়মান থেকে কতখানি বিক্ষিপ্ত এটা পরিমাপ করা হয় variance-এর দ্বারা।<br> 
-                                    <img class="materialboxed" style="margin: auto;" src="{% static "pca4.jpg" %}"><br>
+                                    $$ Var(X) = \frac{\sum_{i=1}^n (x_i- \overline x)^2}{n} $$
                                     <span class="deep-orange-text text-darken-2">Covariance:</span> মনে করুন, আপনার কাছে একটি টেবিল দেওয়া আছে যেখানে X ও Y এর কিছু মান দেওয়া আছে।<br>
                                     <div class="row">
                                         <div class="col s3 pull-s1">      
@@ -78,20 +78,20 @@
                                     </div>
                                 </div>
                                 আপনি জানতে চান যে, X সাথে সাথে Y- এর মান বাড়ে নাকি কমে নাকি X-এর মানের সাথে Y-এর মানের আদৌ কোন সম্পর্ক নেই। এটা বোঝা যাবে Covariance এর দ্বারা।<br>
-                                <img class="materialboxed" style="margin: auto;" src="{% static "pca5.jpg" %}"><br>
+                                $$ C(X,Y) = \frac{\sum_{i=1}^n (x_i- \overline x)(y_i- \overline y)}{n} $$
                                 COV(X, Y) এর মান যদি- <br>
                                 • ধনাত্নক হয়, তারমানে x ও y এর মান একই সাথে বৃদ্ধি পায়।<br>
                                 • ঋণাত্নক হয়, তারমানে x ও y এর যেকোন একজনের মান বাড়লে আরেকজনের কমে।<br>
                                 • শূন্য হয়, তারমানে x ও y এর মান কেও কারোর উপর নির্ভরশীল নয়।<br>
                                 এখানে ডাটা 2-d ছিল। এখন ডাটা যদি 3-d বা আরও বেশী dimension-এর হয়? 
                                 তখন আমরা covariance matrix এর সাহায্যে এটাকে প্রকাশ করব। ডাটা যদি 3-d হত তাহলে covariance matrix হত এরকম।<br>
-                                <img class="materialboxed" style="margin: auto;" src="{% static "pca6.jpg" %}"><br>
+                                $$ C = \begin{pmatrix}COV(X,X) & COV(X,Y) & COV(X,Z)\\COV(Y,X) & COV(Y,Y) & COV(Y,Z)\\COV(Z,X) & COV(Z,Y) & COV(Z,Z) \end{pmatrix} $$
                                 এখানে, COV(X, X) হল Var(X)। আর COV(X, Y) = COV(Y, X)।<br>
                                 <span class="deep-orange-text text-darken-2">Eigen vector এবং eigen value:</span> এতক্ষণ আমরা যা দেখলাম সবই statistical measurement। Eigen vector আর eigen value- এর concept এসেছে linear algebra থেকে। নিচের উদাহরণটি দেখা যাক-<br>
-                                <img class="materialboxed" style="margin: auto;" src="{% static "pca7.jpg" %}"><br>
-                                প্রথমে আমরা 2x2 একটি ম্যাট্রিক্সের সাথে একটি কলাম ভেক্টর গুণ করে <img align="middle" width="35" src="{% static "pca8.jpg" %}"> পেলাম। 
-                                তারপর <img align="middle" width="35" src="{% static "pca8.jpg" %}">-কে একটি পূর্ণসংখ্যা, 7 ও পূর্বের কলাম ম্যাট্রিক্স <img align="middle" width="30" src="{% static "pca9.jpg" %}">- গুণন আকারে প্রকাশ করলাম। এখানে <img align="middle" width="30" src="{% static "pca9.jpg" %}">- 
-                                হচ্ছে <img align="middle" width="50" src="{% static "pca10.jpg" %}">-এর eigen vector এবং 7-হচ্ছে এর eigen value।<br><br>
+                                $$\begin{pmatrix}5 & 4\\2 & 3\end{pmatrix} X \begin{pmatrix}2\\1\end{pmatrix} = \begin{pmatrix}14\\7\end{pmatrix} = 7\begin{pmatrix}14\\7\end{pmatrix} $$
+                                প্রথমে আমরা 2x2 একটি ম্যাট্রিক্সের সাথে একটি কলাম ভেক্টর গুণ করে \(\begin{pmatrix}14\\7\end{pmatrix}\) পেলাম। 
+                                তারপর \(\begin{pmatrix}14\\7\end{pmatrix}\)-কে একটি পূর্ণসংখ্যা, 7 ও পূর্বের কলাম ম্যাট্রিক্স \(\begin{pmatrix}2\\1\end{pmatrix}\)- গুণন আকারে প্রকাশ করলাম। এখানে \(\begin{pmatrix}2\\1\end{pmatrix}\)- 
+                                হচ্ছে \(\begin{pmatrix}5 & 4\\2 & 3\end{pmatrix}\)-এর eigen vector এবং 7-হচ্ছে এর eigen value।<br><br>
                                 Eigen vector সম্পর্কে কিছু গুরুত্বপূর্ণ তথ্যঃ<br>
                                 • কেবল স্কয়ার ম্যাট্রিক্সেরই eigen vector থাকে। তবে সব স্কয়ার ম্যাট্রিক্সের eigen vector থাকে না।<br>
                                 • NxN ম্যাট্রিক্সের N- টি eigen vector থাকবে।<br>
