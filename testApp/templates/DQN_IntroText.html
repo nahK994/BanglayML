@@ -29,8 +29,8 @@
                                         এভাবে Q-learning এর সাথে ডিপ নিউরাল নেটওয়ার্কের combination কে বলে <span class="deep-orange-text text-darken-2">deep Q-learning</span> আর এই নিউরাল নেটওয়ার্ককে বলে <span class="deep-orange-text text-darken-2">deep Q-network</span> বা <span class="deep-orange-text text-darken-2">DQN</span>.<br><br>
                                         <img class="materialboxed" style="margin: auto;" width="600" src="{% static "dqnIntro2.jpg" %}"><br>
                                         Deep Q-Network এ ইনপুট হিসেবে যায় state আর আউটপুট হিসেবে ঐ state এ প্রতিটি action এর estimated Q-value আউটপুট হিসেবে আসে। inner layer গুলোও এমন নতুন কিছু না। নরমাল নিউরাল নেটওয়ার্কের মত এখানেও inner layer এর প্রতিটা নোডে activation function থাকে।<br><br>
-                                        আমাদের মূল উদ্দেশ্য হল, আমাদের estimated optimal Q-function যেন Bellman equation- <img align="middle" width="280" src="{% static "dqnIntro3.jpg" %}"> কে মেনে চলে। 
-                                        সুতরাং, loss function টা হবে DQN- এর আউটপুট আর <img align="middle" width="60" src="{% static "dqnIntro4.jpg" %}"> এর পার্থক্যের বর্গের 1/2N গুণ। এখানে N হল টোটাল ট্রেনিং ডাটা সংখ্যা।<br><br>
+                                        আমাদের মূল উদ্দেশ্য হল, আমাদের estimated optimal Q-function যেন Bellman equation- \( q_*(s, a) = E\left[R_{t+1} + γ\max_{a^/} \left(q_*(s^/, a^/)\right)\right] \) কে মেনে চলে। 
+                                        সুতরাং, loss function টা হবে DQN- এর আউটপুট আর \( q_*(s, a) \) এর পার্থক্যের বর্গের 1/2N গুণ। এখানে N হল টোটাল ট্রেনিং ডাটা সংখ্যা।<br><br>
                                         এরপর বারবার iteration করে Stochastic Gradient Descent(SGD) ও Backpropagation এর মাধ্যমে DQN-এর edge এর weight গুলোকে এমনভাবে আপডেট করা হয় যেন loss যথেষ্ট পরিমাণ কমিয়ে আনা সম্ভব হয়। একদম নরমাল নিউরাল নেটওয়ার্কের মতই।<br>
                                         <img class="materialboxed" style="margin: auto;"  width="400" src="{% static "dqnIntro5.jpg" %}"><br>
                                         এখন প্রশ্ন হল, ট্রেনিং ডাটা পাব কিভাবে? ট্রেনিং ডাটাও তো আগের মতই calculate করে বের করতে হবে। তাই না?<br><br>
