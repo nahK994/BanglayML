@@ -18,27 +18,27 @@
                                         এই ডাটাপয়েন্ট গুলোর উপর ভিত্তি করে যদি একটি অজানা সাইজের বাসার ভাড়া জানার দরকার হয় তাহলে আমরা linear regression এর সাহায্যে পাওয়া ঐ সরলরৈখিক সম্পর্কের সাহায্যে বাসার ভাড়া বলে দিতে পারব। এসব আসলে আমরা আগেই জেনেছি তাও পুরনো স্মৃতি ঝালাই করে নিলাম আরকি।<br> এবার নিচের গ্রাফটির দিকে খেয়াল করে দেখুনঃ
                                         <img class="materialboxed" style="margin: auto;" width="300" src="{% static "logisticRegression2.jpg" %}"><br>
                                         উপরের গ্রাফে ডট(•) আর টিক(√) দ্বারা দুটি ক্লাস বোঝানো হয়েছে। এখন মনে করুন, আপনাকে (x, y) ডাটাপয়েন্ট দেওয়া হল। আপনাকে বলে দিতে হবে এটি কোন ক্লাসের অন্তর্ভুক্ত। এই টাইপ প্রবলেমগুলোকে বলা হয় classification problem. Logistic Regression এর সাহায্যে classification problem গলো সল্ভ করা হয়।<br>
-                                        এখানে হাইপোথিসিসটি এরকম- <img class="materialboxed" style="margin: auto;" width="300" src="{% static "logisticRegression3.jpg" %}"><br>
+                                        এখানে হাইপোথিসিসটি এরকম- $$ h_w(x) = \begin{cases} 1, & \text{if g(w^Tx) >= 0} \\ 0, & \text{if g(w^Tx)<0} \end{cases} $$
                                         গোজামেল লাগছে? সমস্যা না, ভেঙে বলছি। এই হাইপোথিসিস সমীকরণের-
-                                        <img class="materialboxed" style="margin: auto;" width="420" src="{% static "logisticRegression4.jpg" %}"><br>
-                                        এখানে, <img align="middle" width="180" style="margin-top: -8px;" src="{% static "logisticRegression5.jpg" %}"> হল Decision Boundary এর সমীকরণ। নিচের গ্রাফটি দেখুন-<br><br>
+                                        $$ w^Tx = \begin{bmatrix} w_0 \\ w_1 \\ w_2 \end{bmatrix} \begin{bmatrix} 1 & x_1 & x_2 \end{bmatrix} = w_0 = w_1x_1 + w_2x_2 $$
+                                        এখানে, \(w_0 + w_1x_1 + w_2x_2 = 0\) হল Decision Boundary এর সমীকরণ। নিচের গ্রাফটি দেখুন-<br><br>
                                         <img class="materialboxed" style="margin: auto;" width="300" src="{% static "logisticRegression6.jpg" %}"><br>
                                         এবার গ্রাফে ডট(•) ও টিক(√) ক্লাস দুটিকে একটি একটি সরলরেখা দ্বারা আলাদা করা হয়েছে। এই সরলরেখাটিই decision boundary। বলে রাখা ভালো, decision boundary যে সবসময় সরলরেখাই হবে এমন কোন কথা নেই।<br><br>
                                         ট্রেনিং-এর সাহায্যে আমরা decision boundary এর weight-গুলোর মান বের করব।<br>
                                         এবার আমরা g ফাংশন সম্পর্কে জানব। একে activation function বলা হয়। অনেক রকম activation function আছে। এসব ক্ষেত্রে সাধারণত activation function হিসেবে sigmoid function ব্যবহার করা হয়।<br>
-                                        <img class="materialboxed" style="margin: auto;" width="180" src="{% static "logisticRegression7.jpg" %}"><br>
-                                        এবার খেয়াল করে দেখুন যে, <img align="middle" width="30" style="margin-top: -8px;" src="{% static "logisticRegression15.png" %}"> এর মান যদি -∞, 0 এবং ∞ হয় তাহলে sigmoid function এর মান যথাক্রমে 0, 1/2 এবং 1 হবে।<br><br>
+                                        $$ g(w^Tx) = \frac{1}{1+e^{-w^Tx}} $$<br>
+                                        এবার খেয়াল করে দেখুন যে, \( w^Tx \) এর মান যদি -∞, 0 এবং ∞ হয় তাহলে sigmoid function এর মান যথাক্রমে 0, 1/2 এবং 1 হবে।<br><br>
 গ্রাফের উপর দুটি ক্লাস দেখানো হয়েছে। ধরে নিচ্ছি, হাইপোথিসিসে যখন output আসে 1 তখন টিক(√) ক্লাসকে নির্দেশ করে আর 0 আসলে সেটা ডট(•) ক্লাসকে নির্দেশ করে।
 যেহেতু, ডাটাপয়েন্ট decision boundary-র উপরে গেলে sigmoid function এর মান হয় 1/2, তাই sigmoid function এর মান 1/2 থেকে উপরে হলে তা হয় টিক(√) ক্লাসের এর অন্তর্ভুক্ত। আর 1/2 এর নিচে গেলে হয় ডট(•) ক্লাসের অন্তর্ভুক্ত।<br><br>
 এবার আসি ট্রেনিং প্রসেস নিয়ে। ট্রেনিং linear regression এর মতই। তবে cost function এর থেকে আলাদা। sigmoid function নিজেই নন-লিনিয়ার ফাংশন। তাই cost বনাম weight এর গ্রাফটি অনেকটি বেশী আঁকাবাঁকা হবে। local minimaও অনেক বেশী হবে। তাই global minima তে পৌছানো অনেক কঠিন হয়ে যায়। 
 সেজন্য গ্রাফটিকে কিছুটা মসৃণ করে নেওয়া দরকার। log ব্যবহার করে আমরা একে কিছুটা মসৃণ করে নিতে পারি। এখন cost function টি নিম্নরূপঃ<br><br>
-<img class="materialboxed" style="margin: auto;" width="600" src="{% static "logisticRegression8.jpg" %}"><br>
-এখানে, y=1, হলে cost function এর ফাংশনের মান পাওয়া যাবে <img align="middle" width="100" style="margin-top: -8px;" src="{% static "logisticRegression9.jpg" %}"> থেকে, আর যদি y=0 হয় তাহলে পাওয়া যাবে 
-<img align="middle" width="160" style="margin-top: -8px;" src="{% static "logisticRegression10.jpg" %}"> থেকে।<br><br>
-এখন কথা হচ্ছে যখন y=1, তখন <img align="middle" width="45" style="margin-top: -8px;" src="{% static "logisticRegression11.jpg" %}"> এর log নিতে হচ্ছে আর যখন y=0 তখন 1-<img align="middle" width="45" style="margin-top: -8px;" src="{% static "logisticRegression11.jpg" %}"> এর log নিতে হচ্ছে। এমনটা কেন?
-কারণ, internally <img align="middle" width="50" style="margin-top: -8px;" src="{% static "logisticRegression12.jpg" %}"> সবসময় টিক(√) ক্লাসের সম্ভাবনা দেয় আর যেহেতু <img align="middle" width="160" style="margin-top: -8px;" src="{% static "logisticRegression10.jpg" %}"> এর আউটপুট discrete output দেয়, তাই আমরা একে 1 হিসেবে পাই।<br><br>
-এমন না যে, ডট(•) ক্লাসের সময় <img align="middle" width="50" style="margin-top: -8px;" src="{% static "logisticRegression12.jpg" %}"> আলাদাভাবে calculate করা হয়। তাই ডট(•) ক্লাসের সময় 
-<img align="middle" width="75" style="margin-top: -8px;" src="{% static "logisticRegression14.jpg" %}"> না নিয়ে <img align="middle" width="100" style="margin-top: -8px;" src="{% static "logisticRegression13.jpg" %}"> ব্যবহার করা হয়েছে।
+$$ J(w_0, w_1, ...... , w_n) = \frac{1}{m}\sum_{i=1}^m{-y_ilog(h_w(x)) - (1-y_i)log(1-h_w(x))} $$
+এখানে, y=1, হলে cost function এর ফাংশনের মান পাওয়া যাবে \( -y_ilog(h_w(x)) \) থেকে, আর যদি y=0 হয় তাহলে পাওয়া যাবে 
+\( (1-y_i)log(1-h_w(x)) \) থেকে।<br><br>
+এখন কথা হচ্ছে যখন y=1, তখন \( h_w(x) \) এর log নিতে হচ্ছে আর যখন y=0 তখন 1- \(h_w(x)\) এর log নিতে হচ্ছে। এমনটা কেন?
+কারণ, internally \( g(w^Tx) \) সবসময় টিক(√) ক্লাসের সম্ভাবনা দেয় আর যেহেতু \(-(1-y_i)log(1-h_w(x))\) এর আউটপুট discrete output দেয়, তাই আমরা একে 1 হিসেবে পাই।<br><br>
+এমন না যে, ডট(•) ক্লাসের সময় \( g(w^Tx) \) আলাদাভাবে calculate করা হয়। তাই ডট(•) ক্লাসের সময় 
+\( log(h_w(x)) \) না নিয়ে \( log(1-h_w(x)) \) ব্যবহার করা হয়েছে।
 এটাই আমাদের প্রথম ক্লাসিফিকেশন algorithm। আজকের মত এ পর্যন্তই।<br><br>
 এতক্ষণ আমরা আলোচনা করলাম আমরা যখন মডেলকে ডাটা দিব মডেল কিভাবে চিনে নিবে। কিন্তু আমরা কিভাবে মডেলকে বলব যে, এটা টিক(√) ক্লাস আর এটা ডট(•) ক্লাস?<br><br>
 Linear Regression এর মত এখানেও ইনপুট ফিচার ও এক্সপেক্টেড আউটপুট দিয়ে ট্রেইন করাতে হয়। তবে Logistic Regression যেহেতু একটা ক্লাসিফিকেশন algorithm. তাই এর আউটপুট কোন নির্দিষ্ট সংখ্যা না হয়ে একটি array হয়। এখানে, array সাইজ হল মোট ক্লাসের সংখ্যা আর ভেক্টরের প্রতিটি মান ক্লাসের স্ট্যাটাসকে(মানে ইনপুট ফিচারগুলো ঐ ক্লাসের কিনা, যদি ঐ ক্লাসের হয় তাহলে স্ট্যাটাস 1 হবে আর নাহলে 0 হবে।) নির্দেশ করে।<br>
