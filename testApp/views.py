@@ -1,6 +1,5 @@
 from django.views import generic
 from . models import card_table, image_table
-from django.http import HttpResponse
 
 class View(generic.ListView):
     template_name = 'index.html'
