@@ -59,7 +59,6 @@ class Text(generic.ListView):
                 if aa[j] != '':
                     Ans.append(aa[j])
                 j = j+1
-            #Ans.append('<br>')
             i = i+1
 
         ANS = []
@@ -70,7 +69,6 @@ class Text(generic.ListView):
             j = 1
             while j<len(aa):
                 ANS.append(['<img>', imageObj[imageObjIndex]])
-                #ANS.append({'id': '<img>','imageObj': imageObj[imageObjIndex]})
                 imageObjIndex = imageObjIndex +1
                 if len(imageObj) == imageObjIndex:
                     imageObjIndex = 0 
@@ -91,7 +89,6 @@ class Text(generic.ListView):
             j = 1
             while j<len(aa):
                 answer.append(['<code>', codeObj[codeObjIndex]])
-                #answer.append({'id': '<code>','codeObj': codeObj[codeObjIndex]})
                 codeObjIndex = codeObjIndex +1
                 if len(codeObj) == codeObjIndex:
                     codeObjIndex = 0 
@@ -106,6 +103,46 @@ class Text(generic.ListView):
         while len(answer[0])==1 and answer[0] == '':
             answer = answer[1:]
         
-        context['list'] = answer
+        Answer =[]
+        i = 0
+        while i<len(answer):
+            if len(answer[i]) == 2:
+                Answer.append(answer[i])
+                i = i + 1
+                continue
+
+            aa = answer[i].split('<span>')
+            j = 0
+            while j<len(aa):
+                if j%2 == 0:
+                    if aa[j] != '':
+                        Answer.append(aa[j])
+                else:
+                    Answer.append(['<span>', aa[j]])
+                j = j + 1
+
+            i = i + 1
+    
+        ANSWER =[]
+        i = 0
+        while i<len(Answer):
+            if len(Answer[i]) == 2:
+                ANSWER.append(Answer[i])
+                i = i + 1
+                continue
+
+            aa = Answer[i].split('<blockquote>')
+            j = 0
+            while j<len(aa):
+                if j%2 == 0:
+                    if aa[j] != '':
+                        ANSWER.append(aa[j])
+                else:
+                    ANSWER.append(['<blockquote>', aa[j]])
+                j = j + 1
+
+            i = i + 1
+
+        context['list'] = ANSWER
         
         return context

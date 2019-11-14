@@ -16,6 +16,10 @@
                                     {{i.1.text}}
                                 </code>
                             </pre>
+                        {% elif i|length == 2 and i.0 == '<span>' %}
+                            <span class="deep-orange-text text-darken-2">{{i.1}}</span>
+                        {% elif i|length == 2 and i.0 == '<blockquote>' %}
+                            <blockquote>{{i.1}}</blockquote>
                         {% elif i == '<br>' %}
                             <br>
                         {% else %}
