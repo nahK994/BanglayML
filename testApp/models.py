@@ -26,7 +26,22 @@ class image_table(models.Model):
         card_table,
         on_delete = models.CASCADE
     )
+    serialNO = models.IntegerField(default=0)
+    height = models.IntegerField(default=0)
+    width = models.IntegerField(default=0)
     upload = models.ImageField()
+
+    def __str__(self):
+        return self.title
+
+class code_table(models.Model):
+    title = models.CharField(max_length=30)
+    cardID = models.ForeignKey(
+        card_table,
+        on_delete = models.CASCADE
+    )
+    serialNO = models.IntegerField(default=0)
+    text = models.TextField()
 
     def __str__(self):
         return self.title
