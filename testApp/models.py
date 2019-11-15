@@ -32,7 +32,7 @@ class image_table(models.Model):
     upload = models.ImageField()
 
     def __str__(self):
-        return self.title
+        return self.cardID.title + " -> " + self.title
 
 class code_table(models.Model):
     title = models.CharField(max_length=30)
@@ -44,4 +44,16 @@ class code_table(models.Model):
     text = models.TextField()
 
     def __str__(self):
-        return self.title
+        return self.cardID.title + " -> " + self.title
+
+class recommendation_table(models.Model):
+    title = models.CharField(max_length=30)
+    cardID = models.ForeignKey(
+        card_table,
+        on_delete = models.CASCADE
+    )
+    serialNO = models.IntegerField(default=0)
+    link = models.CharField(max_length=300)
+
+    def __str__(self):
+        return self.cardID.title + " -> " + self.title
