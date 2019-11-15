@@ -1,60 +1,59 @@
 from django.db import models
-'''
-class categoryTable(models.Model):
-    categoryID = models.CharField(max_length=30, primary_key=True)
+
+class Categories(models.Model):
+    category_title = models.CharField(max_length=35, primary_key=True)
     
     def __str__(self):
-        return self.categoryID
+        return self.category_title
 
-class card_table(models.Model):
-    cardID = models.AutoField(primary_key=True)
-    categoryID = models.ForeignKey(
-        categoryTable,
+class CardsInfo(models.Model):
+    card_info_ID = models.AutoField(primary_key=True)
+    category_title = models.ForeignKey(
+        Categories,
         on_delete = models.CASCADE
     )
-    serialNO = models.IntegerField(default=0)
-    title = models.CharField(max_length=30)
-    paragraph = models.CharField(max_length=100)
-    text = models.TextField(max_length=1000)
+    card_serial_NO = models.IntegerField(default=0)
+    card_title = models.CharField(max_length=35)
+    card_paragraph = models.CharField(max_length=200)
+    card_text = models.TextField()
     
     def __str__(self):
-        return str(self.categoryID) + " -> " + self.title
+        return str(self.category_title) + " -> " + self.card_title
 
-class image_table(models.Model):
-    title = models.CharField(max_length=30)
-    cardID = models.ForeignKey(
-        card_table,
+class Images(models.Model):
+    image_title = models.CharField(max_length=35)
+    card_info_ID = models.ForeignKey(
+        CardsInfo,
         on_delete = models.CASCADE
     )
-    serialNO = models.IntegerField(default=0)
-    height = models.IntegerField(default=0)
-    width = models.IntegerField(default=0)
-    upload = models.ImageField()
+    image_serial_NO = models.IntegerField(default=0)
+    image_height = models.IntegerField(default=0)
+    image_width = models.IntegerField(default=0)
+    image_upload = models.ImageField()
 
     def __str__(self):
-        return self.cardID.title + " -> " + self.title
+        return self.card_info_ID.card_title + " -> " + self.image_title
 
-class code_table(models.Model):
-    title = models.CharField(max_length=30)
-    cardID = models.ForeignKey(
-        card_table,
+class Codes(models.Model):
+    code_title = models.CharField(max_length=35)
+    card_info_ID = models.ForeignKey(
+        CardsInfo,
         on_delete = models.CASCADE
     )
-    serialNO = models.IntegerField(default=0)
-    text = models.TextField()
+    code_serial_NO = models.IntegerField(default=0)
+    code = models.TextField()
 
     def __str__(self):
-        return self.cardID.title + " -> " + self.title
+        return self.card_info_ID.card_title + " -> " + self.code_title
 
-class recommendation_table(models.Model):
-    title = models.CharField(max_length=30)
-    cardID = models.ForeignKey(
-        card_table,
+class Recommendations(models.Model):
+    recommendation_title = models.CharField(max_length=30)
+    card_info_ID = models.ForeignKey(
+        CardsInfo,
         on_delete = models.CASCADE
     )
-    serialNO = models.IntegerField(default=0)
-    link = models.CharField(max_length=300)
+    recommendation_serial_NO = models.IntegerField(default=0)
+    recommendation_link = models.CharField(max_length=300)
 
     def __str__(self):
-        return self.cardID.title + " -> " + self.title
-    '''
+        return self.card_info_ID.card_title + " -> " + self.recommendation_title

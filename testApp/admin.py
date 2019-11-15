@@ -1,9 +1,8 @@
 from django.contrib import admin
-#from . models import categoryTable, card_table, image_table, code_table, recommendation_table
-'''
-admin.site.register(categoryTable)
-admin.site.register(card_table)
-admin.site.register(image_table)
-admin.site.register(code_table)
-admin.site.register(recommendation_table)
-'''
+from . models import Categories, CardsInfo, Images, Codes, Recommendations
+
+admin.site.register(Categories)
+admin.site.register(CardsInfo)
+admin.site.register(Images)
+admin.site.register(Codes)
+admin.site.register(Recommendations)
