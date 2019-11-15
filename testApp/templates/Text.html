@@ -15,11 +15,11 @@
                                 <p class="center-left">
                                     {%for i in list %}
                                         {% if i|length == 2 and i.0 == '<img>' %}
-                                            <img class="materialboxed" width="{{i.1.width}}" height="{{i.1.height}}" style="margin-left: auto; margin-right: auto; display: block;" src="{{i.1.upload.url}}">
+                                            <img class="materialboxed" width="{{i.1.image_width}}" height="{{i.1.image_height}}" style="margin-left: auto; margin-right: auto; display: block;" src="{{i.1.image_upload.url}}">
                                         {% elif i|length == 2 and i.0 == '<code>' %}
                                             <pre>
                                                 <code>
-                                                    {{i.1.text}}
+                                                    {{i.1.code}}
                                                 </code>
                                             </pre>
                                         {% elif i|length == 2 and i.0 == '<span>' %}
@@ -40,7 +40,7 @@
                         <div class="collapsible-header blue lighten-5" style="font-size: 20px;">Recommendation</div>
                         <div class="collapsible-body">
                             {% for aaa in recommendationList %}
-                            <a href="{{aaa.link}}">{{aaa.title}}</a><br>
+                            <a href="{{aaa.recommendation_link}}">{{aaa.recommendation_title}}</a><br>
                             {% endfor %}
                         </div>
                     </li>
@@ -48,8 +48,8 @@
                     <li>
                         <div class="collapsible-header blue lighten-5" style="font-size: 20px;">আপনার মতামত জানান.....</div>
                         <div class="collapsible-body">
-                            <div class="fb-like" data-href="http://banglayml.herokuapp.com/{{cardID}}/" data-width="" data-layout="standard" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div><br><br>
-                            <div class="fb-comments" data-href="http://banglayml.herokuapp.com/{{cardID}}/" data-width="550" data-numposts="5"></div>
+                            <div class="fb-like" data-href="http://banglayml.herokuapp.com/{{card_info_ID}}/" data-width="" data-layout="standard" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div><br><br>
+                            <div class="fb-comments" data-href="http://banglayml.herokuapp.com/{{card_info_ID}}/" data-width="550" data-numposts="5"></div>
                         </div>
                     </li>
                 </ul>

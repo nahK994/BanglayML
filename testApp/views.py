@@ -1,10 +1,10 @@
 from django.views import generic
-#from . models import card_table, image_table, code_table, recommendation_table
+from . models import Categories, CardsInfo, Images, Codes, Recommendations
 
 class View(generic.ListView):
     template_name = 'index.html'
 
-    #model = card_table
+    model = CardsInfo
     viewType = ''
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -17,32 +17,31 @@ class View(generic.ListView):
         elif self.viewType == 'RL':
             context['title'] = 'Reinforcement Learning - BanglayML'
     
-        #context['querySet'] = super().get_queryset().filter(categoryID = self.viewType).order_by('serialNO')
+        context['querySet'] = super().get_queryset().filter(category_title = self.viewType).order_by('card_serial_NO')
         return context
 
 class Text(generic.ListView):
     template_name = 'Text.html'
     
-    #model = card_table
+    model = CardsInfo
     cardID_for_txt = 0
     
     def get_context_data(self, **kwargs):
-        '''
         context = super().get_context_data(**kwargs)
         
-        context['title'] = str(card_table.objects.get(cardID = self.cardID_for_txt).title)
-        context['cardID'] = self.cardID_for_txt
+        context['title'] = str(card_table.objects.get(card_info_ID = self.cardID_for_txt).title)
+        context['card_info_ID'] = self.cardID_for_txt
         
-        imageObj = image_table.objects.filter(cardID = self.cardID_for_txt).order_by('serialNO')
+        imageObj = Images.objects.filter(card_info_ID = self.cardID_for_txt).order_by('image_serial_NO')
         imageObjIndex = 0
 
-        codeObj = code_table.objects.filter(cardID = self.cardID_for_txt).order_by('serialNO')
+        codeObj = Codes.objects.filter(card_info_ID = self.cardID_for_txt).order_by('code_serial_NO')
         codeObjIndex = 0
 
-        recommendationObj = recommendation_table.objects.filter(cardID = self.cardID_for_txt).order_by('serialNO')
+        recommendationObj = Recommendations.objects.filter(card_info_ID = self.cardID_for_txt).order_by('recommendation_serial_NO')
         context['recommendationList'] = recommendationObj
 
-        a = str(card_table.objects.get(cardID = self.cardID_for_txt).text)
+        a = str(card_table.objects.get(card_info_ID = self.cardID_for_txt).card_text)
         ans = []
         aa = a.split('<br><br>')
         if aa[0] != '':
@@ -151,5 +150,5 @@ class Text(generic.ListView):
             i = i + 1
 
         context['list'] = ANSWER
-        '''
+
         return context
