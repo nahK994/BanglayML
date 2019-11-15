@@ -1,5 +1,5 @@
 from django.views import generic
-from . models import card_table, image_table, code_table
+from . models import card_table, image_table, code_table, recommendation_table
 from django.shortcuts import render
 
 class View(generic.ListView):
@@ -28,12 +28,16 @@ class Text(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = str(card_table.objects.get(cardID = self.cardID_for_txt).title)
+        context['cardID'] = self.cardID_for_txt
         
         imageObj = image_table.objects.filter(cardID = self.cardID_for_txt).order_by('serialNO')
         imageObjIndex = 0
 
         codeObj = code_table.objects.filter(cardID = self.cardID_for_txt).order_by('serialNO')
         codeObjIndex = 0
+
+        recommendationObj = recommendation_table.objects.filter(cardID = self.cardID_for_txt).order_by('serialNO')
+        context['recommendationList'] = recommendationObj
 
         a = str(card_table.objects.get(cardID = self.cardID_for_txt).text)
         ans = []

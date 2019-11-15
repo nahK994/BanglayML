@@ -1,32 +1,58 @@
 {% extends 'base.html' %}
+
 {% block body %}
-<title>{{ title }} - BanglayML</title>
+<title>{{title}} - BanglayML</title>
 <div class="row">
-    <div class="col">
+    <div class="col s10 push-s1">
         <div class="card">
             <div class="card-content">
-                <span class="card-title center-align teal-text text-darken-1">{{title}}</span>
-                <p class="center-left">
-                    {%for i in list %}
-                        {% if i|length == 2 and i.0 == '<img>' %}
-                            <img class="materialboxed" width="{{i.1.width}}" height="{{i.1.height}}" src="{{i.1.upload.url}}">
-                        {% elif i|length == 2 and i.0 == '<code>' %}
-                            <pre>
-                                <code>
-                                    {{i.1.text}}
-                                </code>
-                            </pre>
-                        {% elif i|length == 2 and i.0 == '<span>' %}
-                            <span class="deep-orange-text text-darken-2">{{i.1}}</span>
-                        {% elif i|length == 2 and i.0 == '<blockquote>' %}
-                            <blockquote>{{i.1}}</blockquote>
-                        {% elif i == '<br>' %}
-                            <br>
-                        {% else %}
-                            {{i}}
-                        {% endif %}
-                    {% endfor %}
-                </p>
+                <span class="card-title center-align deep-orange-text text-darken-2">{{title}}</span>
+                
+                <ul class="collapsible expandable">
+                    <li class="active">
+                        <div class="collapsible-header blue lighten-5" style="font-size: 20px;">Blog</div>
+                            <div class="collapsible-body">
+                                <p class="center-left">
+                                    {%for i in list %}
+                                        {% if i|length == 2 and i.0 == '<img>' %}
+                                            <img class="materialboxed" width="{{i.1.width}}" height="{{i.1.height}}" style="margin-left: auto; margin-right: auto; display: block;" src="{{i.1.upload.url}}">
+                                        {% elif i|length == 2 and i.0 == '<code>' %}
+                                            <pre>
+                                                <code>
+                                                    {{i.1.text}}
+                                                </code>
+                                            </pre>
+                                        {% elif i|length == 2 and i.0 == '<span>' %}
+                                            <span class="deep-orange-text text-darken-2">{{i.1}}</span>
+                                        {% elif i|length == 2 and i.0 == '<blockquote>' %}
+                                            <blockquote>{{i.1}}</blockquote>
+                                        {% elif i == '<br>' %}
+                                            <br>
+                                        {% else %}
+                                            {{i}}
+                                        {% endif %}
+                                    {% endfor %}
+                                </p>
+                        </div>
+                    </li>
+                    {% if recommendationList|length > 0 %}
+                    <li>
+                        <div class="collapsible-header blue lighten-5" style="font-size: 20px;">Recommendation</div>
+                        <div class="collapsible-body">
+                            {% for aaa in recommendationList %}
+                            <a href="{{aaa.link}}">{{aaa.title}}</a><br>
+                            {% endfor %}
+                        </div>
+                    </li>
+                    {% endif %}
+                    <li>
+                        <div class="collapsible-header blue lighten-5" style="font-size: 20px;">আপনার মতামত জানান.....</div>
+                        <div class="collapsible-body">
+                            <div class="fb-like" data-href="http://banglayml.herokuapp.com/{{cardID}}/" data-width="" data-layout="standard" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div><br><br>
+                            <div class="fb-comments" data-href="http://banglayml.herokuapp.com/{{cardID}}/" data-width="550" data-numposts="5"></div>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
