@@ -29,7 +29,7 @@ class Text(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         
-        context['title'] = str(card_table.objects.get(card_info_ID = self.cardID_for_txt).title)
+        context['title'] = str(CardsInfo.objects.get(card_info_ID = self.cardID_for_txt).title)
         context['card_info_ID'] = self.cardID_for_txt
         
         imageObj = Images.objects.filter(card_info_ID = self.cardID_for_txt).order_by('image_serial_NO')
@@ -41,7 +41,7 @@ class Text(generic.ListView):
         recommendationObj = Recommendations.objects.filter(card_info_ID = self.cardID_for_txt).order_by('recommendation_serial_NO')
         context['recommendationList'] = recommendationObj
 
-        a = str(card_table.objects.get(card_info_ID = self.cardID_for_txt).card_text)
+        a = str(CardsInfo.objects.get(card_info_ID = self.cardID_for_txt).card_text)
         ans = []
         aa = a.split('<br><br>')
         if aa[0] != '':
