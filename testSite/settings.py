@@ -78,10 +78,11 @@ WSGI_APPLICATION = 'testSite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'db1',
-        'USER': 'db_user1',
+        'NAME': 'db2',
+        'USER': 'db_user2',
         'PASSWORD': 'blablabla',
         'HOST': 'https://banglayml.herokuapp.com/',
+        #'HOST': 'localhost',
         'PORT': '',
     }
 }
