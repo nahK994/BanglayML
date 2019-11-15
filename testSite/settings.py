@@ -25,7 +25,7 @@ SECRET_KEY = 'h&o9^66dhx)xpg!0^t&lx-wsq8KUYF&$IYYYYYYY&*LI**(@#M^X&@#R&1w&7x4p2+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['banglayml.herokuapp.com']
+ALLOWED_HOSTS = ['http://banglayml.herokuapp.com/']
 
 
 # Application definition
