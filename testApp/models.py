@@ -1,5 +1,5 @@
 from django.db import models
-
+'''
 class categoryTable(models.Model):
     categoryID = models.CharField(max_length=30, primary_key=True)
     
@@ -57,3 +57,4 @@ class recommendation_table(models.Model):
 
     def __str__(self):
         return self.cardID.title + " -> " + self.title
+    '''

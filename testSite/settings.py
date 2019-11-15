@@ -81,8 +81,8 @@ DATABASES = {
         'NAME': 'db2',
         'USER': 'db_user2',
         'PASSWORD': 'blablabla',
-        'HOST': 'https://banglayml.herokuapp.com/',
-        #'HOST': 'localhost',
+        #'HOST': 'https://banglayml.herokuapp.com/',
+        'HOST': 'localhost',
         'PORT': '',
     }
 }
