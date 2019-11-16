@@ -21,13 +21,13 @@
                                                 </code>
                                             </pre>
                                         {% elif i|length == 2 and i.0 == '<span>' %}
-                                            <span class="deep-orange-text text-darken-2" style="font-size: 18px;">{{i.1}}</span>
+                                            <p class="center-left" style="font-size: 18px; display: inline;"><span class="deep-orange-text text-darken-2">{{i.1}}</span></p>
                                         {% elif i|length == 2 and i.0 == '<blockquote>' %}
                                             <blockquote>{{i.1}}</blockquote>
                                         {% elif i == '<br>' %}
                                             <br>
                                         {% else %}
-                                            <p class="center-left" style="font-size: 18px;">{{i}}</p>
+                                            <p class="center-left" style="font-size: 18px; display: inline;">{{i}}</p>
                                         {% endif %}
                                     {% endfor %}
                         </div>
