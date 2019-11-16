@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-
 {% block body %}
 <title>{{title}} - BanglayML</title>
 <div class="row">
@@ -12,7 +11,6 @@
                     <li class="active">
                         <div class="collapsible-header blue lighten-5" style="font-size: 20px;">Blog</div>
                             <div class="collapsible-body">
-                                <p class="center-left">
                                     {%for i in list %}
                                         {% if i|length == 2 and i.0 == '<img>' %}
                                             <img class="materialboxed" width="{{i.1.image_width}}" height="{{i.1.image_height}}" style="margin-left: auto; margin-right: auto; display: block;" src="{{i.1.image_upload.url}}">
@@ -23,16 +21,15 @@
                                                 </code>
                                             </pre>
                                         {% elif i|length == 2 and i.0 == '<span>' %}
-                                            <span class="deep-orange-text text-darken-2">{{i.1}}</span>
+                                            <span class="deep-orange-text text-darken-2" style="font-size: 18px;">{{i.1}}</span>
                                         {% elif i|length == 2 and i.0 == '<blockquote>' %}
                                             <blockquote>{{i.1}}</blockquote>
                                         {% elif i == '<br>' %}
                                             <br>
                                         {% else %}
-                                            {{i}}
+                                            <p class="center-left" style="font-size: 18px;">{{i}}</p>
                                         {% endif %}
                                     {% endfor %}
-                                </p>
                         </div>
                     </li>
                     {% if recommendationList|length > 0 %}
