@@ -18,7 +18,7 @@ class CardsInfo(models.Model):
     card_text = models.TextField()
     
     def __str__(self):
-        return str(self.category_title) + " -> " + self.card_title
+        return self.category_title + " -> " + self.card_title + " -> Serial No: " + self.card_serial_NO
 
 class Images(models.Model):
     image_title = models.CharField(max_length=35)
@@ -32,7 +32,7 @@ class Images(models.Model):
     image_upload = models.ImageField()
 
     def __str__(self):
-        return self.card_info_ID.card_title + " -> " + self.image_title
+        return self.card_info_ID.card_title + " -> " + self.image_title + " -> Serial No: " + self.image_serial_NO
 
 class Codes(models.Model):
     code_title = models.CharField(max_length=35)
@@ -44,7 +44,7 @@ class Codes(models.Model):
     code = models.TextField()
 
     def __str__(self):
-        return self.card_info_ID.card_title + " -> " + self.code_title
+        return self.card_info_ID.card_title + " -> " + self.code_title + " -> Serial No: " + self.code_serial_NO
 
 class Recommendations(models.Model):
     recommendation_title = models.CharField(max_length=30)
@@ -56,4 +56,4 @@ class Recommendations(models.Model):
     recommendation_link = models.CharField(max_length=300)
 
     def __str__(self):
-        return self.card_info_ID.card_title + " -> " + self.recommendation_title
+        return self.card_info_ID.card_title + " -> " + self.recommendation_title + " -> Serial No: " + self.recommendation_serial_NO
