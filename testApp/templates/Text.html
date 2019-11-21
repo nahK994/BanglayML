@@ -13,7 +13,7 @@
                             <div class="collapsible-body">
                                     {%for i in list %}
                                         {% if i|length == 2 and i.0 == '<img>' %}
-                                            <img class="materialboxed" src="{{i.1.Upload_Link}}" width="{{i.1.Width}}" height="{{i.1.Height}}" style="margin-left: auto; margin-right: auto; display: block;">
+                                            <img class="materialboxed" src="https://drive.google.com/uc?export=view&id={{i.1.Upload_Link}}" width="{{i.1.Width}}" height="{{i.1.Height}}" style="margin-left: auto; margin-right: auto; display: block;">
                                         {% elif i|length == 2 and i.0 == '<code>' %}
                                             <pre>
                                                 <code>
