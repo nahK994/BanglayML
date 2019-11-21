@@ -19,7 +19,7 @@ class CardsInfo(models.Model):
     
     def __str__(self):
         return str(self.category_title) + " -> " + self.card_title + " -> Serial No: " + str(self.card_serial_NO)
-
+'''
 class Images(models.Model):
     image_title = models.CharField(max_length=35)
     card_info_ID = models.ForeignKey(
@@ -33,7 +33,7 @@ class Images(models.Model):
 
     def __str__(self):
         return self.card_info_ID.card_title + " -> " + self.image_title + " -> Serial No: " + str(self.image_serial_NO)
-
+'''
 class The_All_New_Images_From_GoogleDrive(models.Model):
     Title = models.CharField(max_length=35)
     card_info_ID = models.ForeignKey(
@@ -60,6 +60,7 @@ class Codes(models.Model):
     def __str__(self):
         return self.card_info_ID.card_title + " -> " + self.code_title + " -> Serial No: " + str(self.code_serial_NO)
 
+'''
 class Recommendations(models.Model):
     recommendation_title = models.CharField(max_length=30)
     card_info_ID = models.ForeignKey(
@@ -71,3 +72,15 @@ class Recommendations(models.Model):
 
     def __str__(self):
         return self.card_info_ID.card_title + " -> " + self.recommendation_title + " -> Serial No: " + str(self.recommendation_serial_NO)
+'''
+class References(models.Model):
+    reference_title = models.CharField(max_length=200)
+    card_info_ID = models.ForeignKey(
+        CardsInfo,
+        on_delete = models.CASCADE
+    )
+    reference_serial_NO = models.IntegerField(default=0)
+    reference_link = models.CharField(max_length=300)
+
+    def __str__(self):
+        return self.card_info_ID.card_title + " -> " + self.reference_title + " -> Serial No: " + str(self.reference_serial_NO)

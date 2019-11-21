@@ -1,5 +1,5 @@
 from django.views import generic
-from . models import Categories, CardsInfo, Images, Codes, Recommendations, The_All_New_Images_From_GoogleDrive
+from . models import Categories, CardsInfo, Codes, References, The_All_New_Images_From_GoogleDrive
 from django.shortcuts import render
 
 class View(generic.ListView):
@@ -35,7 +35,7 @@ def Text(request, cardID_for_txt=1):
     codeObj = Codes.objects.filter(card_info_ID = cardID_for_txt).order_by('code_serial_NO')
     codeObjIndex = 0
 
-    recommendationObj = Recommendations.objects.filter(card_info_ID = cardID_for_txt).order_by('recommendation_serial_NO')
+    recommendationObj = References.objects.filter(card_info_ID = cardID_for_txt).order_by('reference_serial_NO')
     context['recommendationList'] = recommendationObj
 
     a = str(CardsInfo.objects.get(card_info_ID = cardID_for_txt).card_text)
