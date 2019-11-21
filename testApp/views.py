@@ -1,5 +1,5 @@
 from django.views import generic
-from . models import Categories, CardsInfo, Images, Codes, Recommendations
+from . models import Categories, CardsInfo, Images, Codes, Recommendations, The_All_New_Images_From_GoogleDrive
 from django.shortcuts import render
 
 class View(generic.ListView):
@@ -17,6 +17,8 @@ class View(generic.ListView):
             context['title'] = 'Unsupervised Learning - BanglayML'
         elif self.viewType == 'RL':
             context['title'] = 'Reinforcement Learning - BanglayML'
+        elif self.viewType == 'RNN':
+            context['title'] = 'Deep Learning: RNN - BanglayML'
     
         context['querySet'] = super().get_queryset().filter(category_title = self.viewType).order_by('card_serial_NO')
         return context
@@ -27,9 +29,9 @@ def Text(request, cardID_for_txt=1):
     context['title'] = str(CardsInfo.objects.get(card_info_ID = cardID_for_txt).card_title)
     context['card_info_ID'] = cardID_for_txt
         
-    imageObj = Images.objects.filter(card_info_ID = cardID_for_txt).order_by('image_serial_NO')
+    imageObj = The_All_New_Images_From_GoogleDrive.objects.filter(card_info_ID = cardID_for_txt).order_by('Serial_NO')
     imageObjIndex = 0
-
+    # {{i.1.image_upload.url}}
     codeObj = Codes.objects.filter(card_info_ID = cardID_for_txt).order_by('code_serial_NO')
     codeObjIndex = 0
 
@@ -72,7 +74,7 @@ def Text(request, cardID_for_txt=1):
             ANS.append(['<img>', imageObj[imageObjIndex]])
             imageObjIndex = imageObjIndex +1
             if len(imageObj) == imageObjIndex:
-               imageObjIndex = 0 
+               imageObjIndex = 0
                 
             ANS.append(aa[j])
             j = j+1

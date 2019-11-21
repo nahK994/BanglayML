@@ -19,6 +19,7 @@
 		$(document).ready(function(){
 			$('.materialboxed').materialbox();
 			$('.collapsible.expandable').collapsible({'accordion':false});
+			$(".dropdown-trigger").dropdown();
   		});
 	</script>
 
@@ -31,12 +32,17 @@
 	</style>
 	</head>
 	<body>
+		<ul id="dropdown1" class="dropdown-content blue darken-1">
+			<li><a class="waves-effect waves-light" href="/SL_View/"><span class="grey-text text-lighten-5">Basic Supervised Learning</span></a></li>
+			<li class="divider"></li>
+			<li><a class="waves-effect waves-light" href="/RNN_View/"><span class="grey-text text-lighten-5">Deep Learning: RNN</span></a></li>
+		</ul>
 		<nav>
 			<div class="nav-wrapper blue darken-3">
 				<a class="waves-effect waves-light" href="/"><img class="materialboxed" style="margin-left: 10px;" width="54" src="{% static "logo.png" %}"></a>
 				<ul id="nav-mobile" class="right hide-on-med-and-down">
 					<li><a class="waves-effect waves-light" href="/">Introduction</a></li>
-					<li><a class="waves-effect waves-light" href="/SL_View/">Supervised Learning</a></li>
+					<li><a class="waves-effect waves-light dropdown-trigger" data-target="dropdown1" href="">Supervised Learning<i class="material-icons right">arrow_drop_down</i></i></a></li>
 					<li><a class="waves-effect waves-light" href="/UL_View/">Unsupervised Learning</a></li>
 					<li><a class="waves-effect waves-light" href="/RL_View/">Reinforcement Learning</a></li>
 			  	</ul>

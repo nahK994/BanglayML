@@ -34,6 +34,20 @@ class Images(models.Model):
     def __str__(self):
         return self.card_info_ID.card_title + " -> " + self.image_title + " -> Serial No: " + str(self.image_serial_NO)
 
+class The_All_New_Images_From_GoogleDrive(models.Model):
+    Title = models.CharField(max_length=35)
+    card_info_ID = models.ForeignKey(
+        CardsInfo,
+        on_delete = models.CASCADE
+    )
+    Serial_NO = models.IntegerField(default=0)
+    Height = models.IntegerField(default=0)
+    Width = models.IntegerField(default=0)
+    Upload_Link = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.card_info_ID.card_title + " -> " + self.Title + " -> Serial No: " + str(self.Serial_NO)
+
 class Codes(models.Model):
     code_title = models.CharField(max_length=35)
     card_info_ID = models.ForeignKey(
