@@ -60,19 +60,6 @@ class Codes(models.Model):
     def __str__(self):
         return self.card_info_ID.card_title + " -> " + self.code_title + " -> Serial No: " + str(self.code_serial_NO)
 
-'''
-class Recommendations(models.Model):
-    recommendation_title = models.CharField(max_length=30)
-    card_info_ID = models.ForeignKey(
-        CardsInfo,
-        on_delete = models.CASCADE
-    )
-    recommendation_serial_NO = models.IntegerField(default=0)
-    recommendation_link = models.CharField(max_length=300)
-
-    def __str__(self):
-        return self.card_info_ID.card_title + " -> " + self.recommendation_title + " -> Serial No: " + str(self.recommendation_serial_NO)
-'''
 class References(models.Model):
     reference_title = models.CharField(max_length=200)
     card_info_ID = models.ForeignKey(
