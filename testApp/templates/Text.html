@@ -5,11 +5,10 @@
     <div class="col s10 push-s1">
         <div class="card">
             <div class="card-content">
-                <span class="card-title center-align deep-orange-text text-darken-2">{{title}}</span>
-                
+                <span class="card-title center-align teal-text text-darken-2">{{title}}</span>
                 <ul class="collapsible expandable">
                     <li class="active">
-                        <div class="collapsible-header blue lighten-5" style="font-size: 20px;">Blog</div>
+                        <div class="collapsible-header blue-grey lighten-5" style="font-size: 20px;">Blog</div>
                             <div class="collapsible-body">
                                     {%for i in list %}
                                         {% if i|length == 2 and i.0 == '<img>' %}
@@ -21,7 +20,7 @@
                                                 </code>
                                             </pre>
                                         {% elif i|length == 2 and i.0 == '<span>' %}
-                                            <p class="center-left" style="font-size: 18px; display: inline;"><span class="deep-orange-text text-darken-2">{{i.1}}</span></p>
+                                            <p class="center-left" style="font-size: 18px; display: inline;"><span class="teal-text">{{i.1}}</span></p>
                                         {% elif i|length == 2 and i.0 == '<blockquote>' %}
                                             <blockquote>{{i.1}}</blockquote>
                                         {% elif i == '<br>' %}
@@ -34,7 +33,7 @@
                     </li>
                     {% if recommendationList|length > 0 %}
                     <li>
-                        <div class="collapsible-header blue lighten-5" style="font-size: 20px;">Recommendation</div>
+                        <div class="collapsible-header blue-grey lighten-5" style="font-size: 20px;">Recommendation</div>
                         <div class="collapsible-body">
                             {% for aaa in recommendationList %}
                             <a href="{{aaa.reference_link}}">{{aaa.reference_title}}</a><br>
@@ -43,7 +42,7 @@
                     </li>
                     {% endif %}
                     <li>
-                        <div class="collapsible-header blue lighten-5" style="font-size: 20px;">আপনার মতামত জানান.....</div>
+                        <div class="collapsible-header blue-grey lighten-5" style="font-size: 20px;">আপনার মতামত জানান.....</div>
                         <div class="collapsible-body">
                             <div class="fb-like" data-href="http://banglayml.herokuapp.com/{{card_info_ID}}/" data-width="" data-layout="standard" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div><br><br>
                             <div class="fb-comments" data-href="http://banglayml.herokuapp.com/{{card_info_ID}}/" data-width="550" data-numposts="5"></div>

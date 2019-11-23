@@ -24,7 +24,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'h&o9^66dhx)xpg!0^t&lx-wsqUB&^I
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = ['banglayml.herokuapp.com', '127.0.0.1'] # 'banglayml.herokuapp.com', '127.0.0.1'
+ALLOWED_HOSTS = ['*'] # 'banglayml.herokuapp.com', '127.0.0.1'
 
 
 # Application definition
