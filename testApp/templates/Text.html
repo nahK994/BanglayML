@@ -20,13 +20,13 @@
                                                 </code>
                                             </pre>
                                         {% elif i|length == 2 and i.0 == '<span>' %}
-                                            <p class="flow-text center-left" style="font-size: 99%; display: inline;"><span class="teal-text">{{i.1}}</span></p>
+                                            <p class="flow-text center-left" style="display: inline;"><span class="teal-text">{{i.1}}</span></p>
                                         {% elif i|length == 2 and i.0 == '<blockquote>' %}
-                                            <blockquote style="font-size: 99%;">{{i.1}}</blockquote>
+                                            <blockquote>{{i.1}}</blockquote>
                                         {% elif i == '<br>' %}
                                             <br>
                                         {% else %}
-                                            <p class="flow-text center-left" style="font-size: 99%; display: inline;">{{i}}</p>
+                                            <p class="flow-text center-left" style="display: inline;">{{i}}</p>
                                         {% endif %}
                                     {% endfor %}
                         </div>
@@ -36,7 +36,7 @@
                         <div class="collapsible-header blue-grey lighten-5" style="font-size: 20px;">Recommendation</div>
                         <div class="collapsible-body">
                             {% for aaa in recommendationList %}
-                            <a href="{{aaa.reference_link}}" target="_blank"><span class="flow-text" style="font-size: 99%;">{{aaa.reference_title}}</span></a><br>
+                            <a href="{{aaa.reference_link}}" target="_blank"><span class="flow-text">{{aaa.reference_title}}</span></a><br>
                             {% endfor %}
                         </div>
                     </li>
