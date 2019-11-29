@@ -12,7 +12,7 @@
                             <div class="collapsible-body">
                                     {%for i in list %}
                                         {% if i|length == 2 and i.0 == '<img>' %}
-                                            <img class="materialboxed" src="https://drive.google.com/uc?export=view&id={{i.1.Upload_Link}}" width="{{i.1.Width}}" height="{{i.1.Height}}" style="margin-left: auto; margin-right: auto; display: block;">
+                                            <img class="materialboxed responsive-img" src="https://drive.google.com/uc?export=view&id={{i.1.Upload_Link}}" width="{{i.1.Width}}" height="{{i.1.Height}}" style="margin-left: auto; margin-right: auto; display: block;">
                                         {% elif i|length == 2 and i.0 == '<code>' %}
                                             <pre>
                                                 <code>
@@ -20,13 +20,13 @@
                                                 </code>
                                             </pre>
                                         {% elif i|length == 2 and i.0 == '<span>' %}
-                                            <p class="center-left" style="font-size: 18px; display: inline;"><span class="teal-text">{{i.1}}</span></p>
+                                            <p class="flow-text center-left" style="font-size: 18px; display: inline;"><span class="teal-text">{{i.1}}</span></p>
                                         {% elif i|length == 2 and i.0 == '<blockquote>' %}
-                                            <blockquote>{{i.1}}</blockquote>
+                                            <blockquote style="font-size: 18px;">{{i.1}}</blockquote>
                                         {% elif i == '<br>' %}
                                             <br>
                                         {% else %}
-                                            <p class="center-left" style="font-size: 18px; display: inline;">{{i}}</p>
+                                            <p class="flow-text center-left" style="font-size: 18px; display: inline;">{{i}}</p>
                                         {% endif %}
                                     {% endfor %}
                         </div>
@@ -36,7 +36,7 @@
                         <div class="collapsible-header blue-grey lighten-5" style="font-size: 20px;">Recommendation</div>
                         <div class="collapsible-body">
                             {% for aaa in recommendationList %}
-                            <a href="{{aaa.reference_link}}" target="_blank">{{aaa.reference_title}}</a><br>
+                            <a href="{{aaa.reference_link}}" target="_blank"><span class="flow-text">{{aaa.reference_title}}</span></a><br>
                             {% endfor %}
                         </div>
                     </li>
@@ -44,8 +44,12 @@
                     <li>
                         <div class="collapsible-header blue-grey lighten-5" style="font-size: 20px;">আপনার মতামত জানান.....</div>
                         <div class="collapsible-body">
-                            <div class="fb-like" data-href="http://banglayml.herokuapp.com/{{card_info_ID}}/" data-width="" data-layout="standard" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div><br><br>
-                            <div class="fb-comments" data-href="http://banglayml.herokuapp.com/{{card_info_ID}}/" data-width="550" data-numposts="5"></div>
+                            <div class="row">
+                                <div class="col s0 m3 l8">
+                                    <div class="fb-like" data-href="http://banglayml.herokuapp.com/{{card_info_ID}}/" data-width="" data-layout="box_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div><br><br>
+                                    <div class="fb-comments" data-href="http://banglayml.herokuapp.com/{{card_info_ID}}/" data-width="" data-numposts="5"></div>
+                                </div>
+                            </div>
                         </div>
                     </li>
                 </ul>

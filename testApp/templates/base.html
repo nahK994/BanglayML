@@ -19,7 +19,8 @@
 		$(document).ready(function(){	
 			$('.materialboxed').materialbox();
 			$('.collapsible.expandable').collapsible({'accordion':false});
-			$(".dropdown-trigger").dropdown();
+			$('.dropdown-trigger').dropdown();
+			$('.sidenav').sidenav();
   		});
 	</script>
 	<style>
@@ -38,15 +39,36 @@
 		</ul>
 		<nav style="margin-bottom: 20px;">
 			<div class="nav-wrapper blue-grey lighten-2">
-				<a class="waves-effect waves-light" href="/"><img class="materialboxed" style="margin-left: 0px; margin-top: -5px;" height="70px;" width="75px;" src="{% static "Free_Sample_By_Wix(3)" %}"></a>
+				<a class="waves-effect waves-light hide-on-med-and-down" href="/"><img class="materialboxed" style="margin-left: 5px; margin-top: 3px;" height="55px;" width="60px;" src="{% static "Free_Sample_By_Wix(3).png" %}"></a>
+
+				<a class="sidenav-trigger" data-target="mobile-demo" href="#">
+					<icon class="material-icons" style="margin-top: 15px;">menu</icon>
+				</a>
 				<ul id="nav-mobile" class="right hide-on-med-and-down">
 					<li><a class="waves-effect waves-light" href="/">Introduction</a></li>
-					<li><a class="waves-effect waves-light dropdown-trigger" data-target="dropdown1" href="">Supervised Learning<i class="material-icons right">arrow_drop_down</i></i></a></li>
+					<li><a class="waves-effect waves-light dropdown-trigger" data-target="dropdown1" href="">Supervised Learning<i class="material-icons right">arrow_drop_down</i></a></li>
 					<li><a class="waves-effect waves-light" href="/UL_View/">Unsupervised Learning</a></li>
 					<li><a class="waves-effect waves-light" href="/RL_View/">Reinforcement Learning</a></li>
 			  	</ul>
 			</div>
 		</nav>
+
+
+
+
+		
+
+		<ul id="dropdown2" class="dropdown-content">
+				<li><a class="waves-effect waves-light" href="/SL_View/"><span class="blue-grey-text text-darken-1">Basic Supervised Learning</span></a></li>
+				<li class="divider"></li>
+				<li><a class="waves-effect waves-light" href="/RNN_View/"><span class="blue-grey-text text-darken-1">Deep Learning: RNN</span></a></li>
+			</ul>
+		<ul id="mobile-demo" class="sidenav">
+			<li><a class="waves-effect waves-light" href="/"><span class="blue-grey-text text-darken-2">Introduction</span></a></li>
+			<li><a class="waves-effect waves-light dropdown-trigger" data-target="dropdown2" href=""><span class="blue-grey-text text-darken-2">Supervised Learning</span><i class="material-icons right">arrow_drop_down</i></a></li>
+			<li><a class="waves-effect waves-light" href="/UL_View/"><span class="blue-grey-text text-darken-2">Unsupervised Learning</span></a></li>
+			<li><a class="waves-effect waves-light" href="/RL_View/"><span class="blue-grey-text text-darken-2">Reinforcement Learning</span></a></li>
+		</ul>
 
 		{% block body %}
 		{% endblock %}
