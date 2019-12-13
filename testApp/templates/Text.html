@@ -24,7 +24,7 @@
                                         {% elif i|length == 2 and i.0 == '<blockquote>' %}
                                             <blockquote style="font-size: 18px;">{{i.1}}</blockquote>
                                         {% elif i|length == 2 and i.0 == '<mathjax>' %}
-                                            <div class="center-left" style="font-size: 18px; display: inline;">{{i.1}}</div>
+                                            <div class="center-left" style="font-size: 18px; display: inline; overflow: auto;">{{i.1}}</div>
                                         {% elif i == '<br>' %}
                                             <br>
                                         {% else %}
@@ -44,10 +44,16 @@
                     </li>
                     {% endif %}
                     <li>
-                        <div class="collapsible-header blue-grey lighten-5" style="font-size: 20px;">আপনার মতামত জানান.....</div>
+                        <div class="collapsible-header blue-grey lighten-5" style="font-size: 20px;">আপনার মতামত জানান...</div>
                         <div class="collapsible-body">
-                            <div class="fb-like" data-href="http://banglayml.herokuapp.com/{{card_info_ID}}/" data-width="" data-layout="box_count" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div><br><br>
-                            <div class="fb-comments" style="overflow: auto;" data-href="http://banglayml.herokuapp.com/{{card_info_ID}}/" data-width="" data-numposts="5"></div>
+                            <div class="row">
+                                <div class="col s12 m12 l10 pull-l1">
+                                    <div class="container">
+                                        <div class="fb-like" data-href="http://banglayml.herokuapp.com/{{card_info_ID}}/" data-width="" data-layout="box_count" data-action="like" data-size="small" data-share="true"></div>
+                                        <div class="fb-comments" style="overflow: auto;" data-href="http://banglayml.herokuapp.com/{{card_info_ID}}/" data-width="" data-numposts="5"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </li>
                 </ul>
