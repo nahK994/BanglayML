@@ -13,7 +13,7 @@ class CardsInfo(models.Model):
         on_delete = models.CASCADE
     )
     card_serial_NO = models.IntegerField(default=0)
-    card_title = models.CharField(max_length=35)
+    card_title = models.CharField(max_length=70)
     card_paragraph = models.CharField(max_length=200)
     card_text = models.TextField()
     
