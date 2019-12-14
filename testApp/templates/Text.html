@@ -14,7 +14,7 @@
                                         {% if i|length == 2 and i.0 == '<img>' %}
                                             <img class="materialboxed responsive-img" src="https://drive.google.com/uc?export=view&id={{i.1.Upload_Link}}" width="{{i.1.Width}}" height="{{i.1.Height}}" style="margin-left: auto; margin-right: auto; display: block;">
                                         {% elif i|length == 2 and i.0 == '<code>' %}
-                                            <pre style="overflow: auto;">
+                                            <pre style="overflow-x: auto;">
                                                 <code>
                                                     {{i.1.code}}
                                                 </code>

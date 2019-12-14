@@ -64,6 +64,12 @@ def Text(request, cardID_for_txt=1):
             j = j+1
         i = i+1
 
+    while len(Ans[len(Ans)-1])==1 and (Ans[len(Ans)-1] == '<br>' or Ans[len(Ans)-1] == ''):
+        Ans = Ans[:-1]
+
+    while len(Ans[0])==1 and Ans[0] == '':
+        Ans = Ans[1:]
+
     ANS = []
     i = 0
     while i<len(Ans):
@@ -83,7 +89,7 @@ def Text(request, cardID_for_txt=1):
     answer = []
     i = 0
     while i<len(ANS):
-        if len(ANS[i]) == 2 and ANS[i][0] == '<img>':
+        if len(ANS[i]) == 2:
             answer.append(ANS[i])
             i = i+1
             continue
@@ -96,17 +102,11 @@ def Text(request, cardID_for_txt=1):
             if len(codeObj) == codeObjIndex:
                 codeObjIndex = 0 
                 
-            ANS.append(aa[j])
+            answer.append(aa[j])
             j = j+1
         i = i+1
-
-    while len(answer[len(answer)-1])==1 and (answer[len(answer)-1] == '<br>' or answer[len(answer)-1] == ''):
-        answer = answer[:-1]
-
-    while len(answer[0])==1 and answer[0] == '':
-        answer = answer[1:]
-        
-    Answer =[]
+     
+    Answer=[]
     i = 0
     while i<len(answer):
         if len(answer[i]) == 2:
