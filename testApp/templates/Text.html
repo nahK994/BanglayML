@@ -14,13 +14,13 @@
                                         {% if i|length == 2 and i.0 == '<img>' %}
                                             <img class="materialboxed responsive-img" src="https://drive.google.com/uc?export=view&id={{i.1.Upload_Link}}" width="{{i.1.Width}}" height="{{i.1.Height}}" style="margin-left: auto; margin-right: auto; display: block;">
                                         {% elif i|length == 2 and i.0 == '<code>' %}
-                                            <pre>
+                                            <pre style="overflow: auto;">
                                                 <code>
                                                     {{i.1.code}}
                                                 </code>
                                             </pre>
                                         {% elif i|length == 2 and i.0 == '<span>' %}
-                                            <p class="center-left" style="font-size: 18px; display: inline;"><span class="teal-text">{{i.1}}</span></p>
+                                            <p class="center-left" style="font-size: 18px; display: inline;"><span class="deep-orange-text text-darken-2">{{i.1}}</span></p>
                                         {% elif i|length == 2 and i.0 == '<blockquote>' %}
                                             <blockquote style="font-size: 18px;">{{i.1}}</blockquote>
                                         {% elif i|length == 2 and i.0 == '<mathjax>' %}
