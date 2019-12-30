@@ -21,6 +21,7 @@
 			$('.collapsible.expandable').collapsible({'accordion':false});
 			$('.dropdown-trigger').dropdown();
 			$('.sidenav').sidenav();
+			$('.tabs').tabs();
   		});
 	</script>
 	<style>
@@ -28,6 +29,14 @@
 		background-image: url("{% static "MyPost.jpg" %}");
 		background-attachment: fixed;
 		background-size: 100% 100%;
+		}
+		pre
+		{
+		background-color: whitesmoke;
+		padding-left: 20px;
+		border: 1px dashed #dedede;
+    	border-radius: 10px;
+		overflow: auto;
 		}
 	</style>
 	</head>
@@ -53,10 +62,6 @@
 			</div>
 		</nav>
 
-
-
-
-		
 
 		<ul id="dropdown2" class="dropdown-content">
 				<li><a class="waves-effect waves-light" href="/SL_View/"><span class="blue-grey-text text-darken-1">Basic Supervised Learning</span></a></li>
